@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/filter_all" android:title="@string/community_filter_all" />
+    <item android:id="@+id/filter_personal" android:title="@string/community_post_type_personal" />
+    <item android:id="@+id/filter_awareness" android:title="@string/community_post_type_awareness" />
+    <item android:id="@+id/filter_official" android:title="@string/community_post_type_official" />
+</menu>

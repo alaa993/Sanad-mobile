@@ -1,0 +1,48 @@
+<resources>
+  <color name="ic_launcher_background">#2F55A5</color>
+  <color name="sanad_blue_primary">#2F55A5</color>
+  <color name="sanad_blue_primary_dark">#1B2F63</color>
+  <color name="sanad_gray_primary">#5E5F5F</color>
+  <color name="sanad_gray_primary_dark">#3E3F3F</color>
+  <color name="sanad_pink_primary">#ED228B</color>
+  <color name="sanad_pink_primary_dark">#C51B73</color>
+  <color name="sanad_specialist_soft">#E9F2FF</color>
+  <color name="sanad_neutral">#5E5F5F</color>
+  <color name="sanad_surface">#FFFFFF</color>
+  <color name="sanad_surface_alt">#FFFFFF</color>
+  <color name="sanad_canvas">#F5F7FC</color>
+  <color name="sanad_canvas_rose">#FDF5F9</color>
+  <color name="sanad_canvas_graphite">#F5F6F7</color>
+  <color name="sanad_tab_bar_bg">#FDFEFF</color>
+  <color name="sanad_tab_bar_bg_rose">#FFFBFD</color>
+  <color name="sanad_tab_bar_bg_graphite">#FBFCFD</color>
+  <color name="sanad_tab_inactive">#8F99B2</color>
+  <color name="sanad_field_stroke">#D8DEEF</color>
+  <color name="sanad_success">#2EAD5B</color>
+  <color name="sanad_on_primary">#FFFFFF</color>
+  <color name="sanad_on_bg">#1A1A1A</color>
+  <color name="sanad_input_hint">#9AA4B2</color>
+  <color name="sanad_card_shadow">#1A000000</color>
+  <!-- Gradients now come from theme attributes. -->
+  <color name="sanad_accent_soft">#E8ECFF</color>
+  <color name="sanad_chip_bg">#F5F6FA</color>
+  <color name="sanad_chip_text">#263056</color>
+  <color name="sanad_button_bg">#F3F0FF</color>
+  <color name="sanad_button_stroke">#F5F6FA</color>
+  <color name="sanad_error">#E53935</color>
+  <color name="sanad_button_soft">#E6F8FA</color>
+  <color name="sanad_button_disabled">#BFEDEE</color>
+  <color name="sanad_button_text_disabled">#7BBEC2</color>
+  <color name="profile_header_start">#2F55A5</color>
+  <color name="profile_header_end">#1B2F63</color>
+  <color name="profile_avatar_bg">#33586FC4</color>
+  <color name="profile_status_bg">#33FFFFFF</color>
+  <color name="profile_icon_bg">#E8ECFF</color>
+  <color name="profile_section_stroke">#EEF1F7</color>
+  <color name="profile_logout_bg">#EEF1F7</color>
+  <color name="profile_segment_checked_bg">#E8ECFF</color>
+  <color name="profile_segment_unchecked_bg">#F1F3F7</color>
+  <color name="profile_segment_checked_text">#2F55A5</color>
+  <color name="profile_segment_unchecked_text">#6F7A92</color>
+
+</resources>

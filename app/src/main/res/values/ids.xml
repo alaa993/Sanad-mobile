@@ -1,0 +1,4 @@
+<resources>
+    <item name="tag_specialist_id" type="id" />
+    <item name="tag_organization_id" type="id" />
+</resources>

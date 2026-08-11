@@ -1,0 +1,434 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <style name="Theme.Sanad.Base" parent="Theme.Material3.Light.NoActionBar">
+    <item name="sanadPrimary">@color/sanad_blue_primary</item>
+    <item name="sanadPrimaryDark">@color/sanad_blue_primary_dark</item>
+    <item name="sanadSecondary">@color/sanad_blue_primary</item>
+    <item name="sanadSecondaryDark">@color/sanad_blue_primary_dark</item>
+    <item name="sanadBgGradientStart">@color/sanad_blue_primary</item>
+    <item name="sanadBgGradientEnd">@color/sanad_blue_primary_dark</item>
+    <item name="sanadButtonPrime">@color/sanad_blue_primary</item>
+    <item name="colorPrimary">?attr/sanadPrimary</item>
+    <item name="colorSecondary">?attr/sanadSecondary</item>
+    <item name="android:windowBackground">@color/sanad_canvas</item>
+    <item name="android:colorBackground">@color/sanad_canvas</item>
+    <item name="android:statusBarColor">@color/sanad_canvas</item>
+    <item name="android:navigationBarColor">@color/sanad_tab_bar_bg</item>
+    <item name="android:windowLightStatusBar">true</item>
+    <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    <item name="android:fontFamily">@font/tajawal_family</item>
+    <item name="fontFamily">@font/tajawal_family</item>
+    <item name="textAppearanceHeadlineLarge">@style/Sanad.TextAppearance.HeadlineLarge</item>
+    <item name="textAppearanceTitleLarge">@style/Sanad.TextAppearance.TitleLarge</item>
+    <item name="textAppearanceBodyLarge">@style/Sanad.TextAppearance.BodyLarge</item>
+    <item name="textAppearanceLabelLarge">@style/Sanad.TextAppearance.LabelLarge</item>
+    <item name="materialButtonStyle">@style/Sanad.Button</item>
+    <item name="textInputStyle">@style/Sanad.TextInput</item>
+    <item name="materialCardViewStyle">@style/Sanad.Card</item>
+    <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Sanad.Small</item>
+    <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Sanad.Medium</item>
+    <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Sanad.Large</item>
+
+  </style>
+
+  <style name="Theme.Sanad" parent="Theme.Sanad.Base" />
+
+  <!-- Cold-start splash: same light canvas + logo as activity_splash (no primary jump). -->
+  <style name="Theme.Sanad.Splash" parent="Theme.SplashScreen">
+    <item name="windowSplashScreenBackground">@color/sanad_canvas</item>
+    <item name="windowSplashScreenAnimatedIcon">@drawable/logobluenotbackgraound</item>
+    <item name="windowSplashScreenIconBackgroundColor">@color/sanad_canvas</item>
+    <item name="postSplashScreenTheme">@style/Theme.Sanad</item>
+    <item name="android:statusBarColor">@color/sanad_canvas</item>
+    <item name="android:navigationBarColor">@color/sanad_tab_bar_bg</item>
+    <item name="android:windowLightStatusBar">true</item>
+    <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+  </style>
+
+  <style name="ThemeOverlay.Sanad" parent="ThemeOverlay.Material3" />
+
+  <style name="ThemeOverlay.Sanad.Blue" parent="ThemeOverlay.Sanad">
+    <item name="sanadPrimary">@color/sanad_blue_primary</item>
+    <item name="sanadPrimaryDark">@color/sanad_blue_primary_dark</item>
+    <item name="sanadSecondary">@color/sanad_blue_primary</item>
+    <item name="sanadSecondaryDark">@color/sanad_blue_primary_dark</item>
+    <item name="sanadBgGradientStart">@color/sanad_blue_primary</item>
+    <item name="sanadBgGradientEnd">@color/sanad_blue_primary_dark</item>
+    <item name="sanadButtonPrime">@color/sanad_blue_primary</item>
+  </style>
+
+  <style name="ThemeOverlay.Sanad.Gray" parent="ThemeOverlay.Sanad">
+    <item name="sanadPrimary">@color/sanad_gray_primary</item>
+    <item name="sanadPrimaryDark">@color/sanad_gray_primary_dark</item>
+    <item name="sanadSecondary">@color/sanad_gray_primary</item>
+    <item name="sanadSecondaryDark">@color/sanad_gray_primary_dark</item>
+    <item name="sanadBgGradientStart">@color/sanad_gray_primary</item>
+    <item name="sanadBgGradientEnd">@color/sanad_gray_primary_dark</item>
+    <item name="sanadButtonPrime">@color/sanad_gray_primary</item>
+  </style>
+
+  <style name="ThemeOverlay.Sanad.Pink" parent="ThemeOverlay.Sanad">
+    <item name="sanadPrimary">@color/sanad_pink_primary</item>
+    <item name="sanadPrimaryDark">@color/sanad_pink_primary_dark</item>
+    <item name="sanadSecondary">@color/sanad_pink_primary</item>
+    <item name="sanadSecondaryDark">@color/sanad_pink_primary_dark</item>
+    <item name="sanadBgGradientStart">@color/sanad_pink_primary</item>
+    <item name="sanadBgGradientEnd">@color/sanad_pink_primary_dark</item>
+    <item name="sanadButtonPrime">@color/sanad_pink_primary</item>
+  </style>
+
+  <style name="Sanad.Button.Base" parent="Widget.Material3.Button">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:insetLeft">0dp</item>
+    <item name="android:insetRight">0dp</item>
+    <item name="cornerRadius">20dp</item>
+    <item name="background">@color/sanad_surface</item>
+    <item name="backgroundColor">@color/sanad_surface</item>
+    <item name="android:paddingHorizontal">18dp</item>
+    <item name="android:paddingVertical">10dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">15sp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/tajawal_medium</item>
+    <item name="fontFamily">@font/tajawal_medium</item>
+  </style>
+
+
+
+  <style name="Sanad.Button.Tonal" parent="Sanad.Button.Base">
+    <item name="android:background">@drawable/bg_button_tonal</item>
+    <item name="android:textColor">@color/sanad_button_text_tint</item>
+    <item name="backgroundTint">@color/sanad_button_tint</item>
+    <item name="strokeColor">@color/sanad_button_tint</item>
+  </style>
+
+
+
+  <style name="Sanad.Button" parent="Sanad.Button.Primary"/>
+
+  <style name="Sanad.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+    <item name="boxBackgroundMode">outline</item>
+    <item name="boxBackgroundColor">@color/sanad_surface</item>
+    <item name="boxStrokeColor">@color/sanad_outline_color</item>
+    <item name="boxStrokeWidth">1dp</item>
+    <item name="boxStrokeWidthFocused">2dp</item>
+    <item name="boxCornerRadiusTopStart">22dp</item>
+    <item name="boxCornerRadiusTopEnd">22dp</item>
+    <item name="boxCornerRadiusBottomStart">22dp</item>
+    <item name="boxCornerRadiusBottomEnd">22dp</item>
+    <item name="hintTextColor">@color/sanad_input_hint</item>
+    <item name="android:textColorHint">@color/sanad_input_hint</item>
+    <item name="startIconTint">@color/sanad_primary</item>
+    <item name="endIconTint">@color/sanad_primary</item>
+  </style>
+
+
+
+
+  <style name="Sanad.PrimaryButton" parent="Sanad.Button.Primary">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="background">@color/sanad_surface</item>
+  </style>
+
+  <style name="Sanad.OutlineButton" parent="Sanad.Button.Outline">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="background">@color/sanad_surface</item>
+  </style>
+
+
+    <style name="Sanad.StatCard" parent="Widget.Material3.CardView.Elevated">
+      <item name="cardCornerRadius">26dp</item>
+      <item name="cardElevation">8dp</item>
+      <item name="cardUseCompatPadding">false</item>
+      <item name="cardPreventCornerOverlap">false</item>
+      <item name="strokeColor">@color/sanad_chip_bg</item>
+      <item name="background">@color/sanad_surface</item>
+      <item name="strokeWidth">1dp</item>
+      <item name="cardBackgroundColor">@color/sanad_surface_alt</item>
+      <item name="android:clipToOutline" tools:targetApi="31">true</item>
+    </style>
+
+    <style name="Sanad.StatCardContent">
+      <item name="android:orientation">horizontal</item>
+      <item name="android:gravity">center_vertical</item>
+      <item name="android:padding">18dp</item>
+      <item name="android:layout_width">match_parent</item>
+      <item name="android:layout_height">wrap_content</item>
+      <item name="background">@color/sanad_surface</item>
+    </style>
+
+  <style name="Sanad.StatNumber" parent="TextAppearance.Material3.TitleLarge">
+      <item name="android:layout_width">wrap_content</item>
+      <item name="android:layout_height">wrap_content</item>
+      <item name="android:textStyle">bold</item>
+      <item name="android:textColor">@color/sanad_on_bg</item>
+    </style>
+
+    <style name="Sanad.BlockCard" parent="Widget.Material3.CardView.Elevated">
+      <item name="cardCornerRadius">26dp</item>
+      <item name="cardUseCompatPadding">true</item>
+      <item name="strokeWidth">0dp</item>
+      <item name="android:padding">20dp</item>
+      <item name="cardBackgroundColor">@color/sanad_surface</item>
+      <item name="background">@color/sanad_surface</item>
+    </style>
+
+  <style name="Sanad.Button.ActionGrid" parent="Sanad.Button.Tonal">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">52dp</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:gravity">center</item>
+    <item name="iconSize">20dp</item>
+    <item name="android:insetTop">0dp</item>
+    <item name="android:insetBottom">0dp</item>
+  </style>
+
+  <style name="Sanad.Button.ActionGrid.Primary" parent="Sanad.Button.Primary">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">52dp</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:gravity">center</item>
+    <item name="iconSize">20dp</item>
+    <item name="android:insetTop">0dp</item>
+    <item name="android:insetBottom">0dp</item>
+  </style>
+
+  <style name="Sanad.PrimaryAction" parent="Sanad.Button.Primary">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:background">@color/sanad_surface</item>
+    <item name="cardBackgroundColor">@color/sanad_surface</item>
+  </style>
+
+  <style name="Sanad.Button.Primary" parent="Widget.Material3.Button.OutlinedButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:insetLeft">0dp</item>
+    <item name="android:insetRight">0dp</item>
+    <item name="android:paddingHorizontal">18dp</item>
+    <item name="android:paddingVertical">10dp</item>
+    <item name="cornerRadius">20dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textStyle">bold</item>
+    <item name="backgroundTint">@color/sanad_button_tint</item>
+    <item name="strokeColor">@color/sanad_button_tint</item>
+    <item name="strokeWidth">1dp</item>
+    <item name="android:textColor">@color/sanad_button_text_tint</item>
+    </style>
+
+  <style name="Sanad.Button.Outline" parent="Widget.Material3.Button.OutlinedButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:insetLeft">0dp</item>
+    <item name="android:insetRight">0dp</item>
+    <item name="android:paddingHorizontal">18dp</item>
+    <item name="android:paddingVertical">10dp</item>
+    <item name="cornerRadius">20dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textStyle">bold</item>
+    <item name="backgroundTint">@color/sanad_button_tint</item>
+    <item name="strokeColor">@color/sanad_button_tint</item>
+    <item name="strokeWidth">1dp</item>
+    <item name="android:textColor">@color/sanad_button_text_tint</item>
+  </style>
+
+  <style name="Sanad.Button.Profile" parent="Sanad.Button.Profile.Primary"/>
+
+  <style name="Sanad.Button.Profile.Primary" parent="Widget.Material3.Button.OutlinedButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:insetLeft">0dp</item>
+    <item name="android:insetRight">0dp</item>
+    <item name="android:paddingHorizontal">18dp</item>
+    <item name="android:paddingVertical">10dp</item>
+    <item name="cornerRadius">20dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textStyle">bold</item>
+    <item name="backgroundTint">@color/sanad_surface</item>
+    <item name="strokeColor">@color/sanad_surface</item>
+    <item name="strokeWidth">1dp</item>
+    <item name="android:textColor">@color/sanad_on_bg</item>
+  </style>
+
+  <style name="Sanad.Button.Profile.Outline" parent="Widget.Material3.Button.OutlinedButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:insetLeft">0dp</item>
+    <item name="android:insetRight">0dp</item>
+    <item name="android:paddingHorizontal">18dp</item>
+    <item name="android:paddingVertical">10dp</item>
+    <item name="cornerRadius">20dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textStyle">bold</item>
+    <item name="backgroundTint">@color/sanad_surface</item>
+    <item name="strokeColor">@color/sanad_surface</item>
+    <item name="strokeWidth">1dp</item>
+    <item name="android:textColor">@color/sanad_on_bg</item>
+  </style>
+
+  <style name="Sanad.Button.Profile.Tonal" parent="Sanad.Button.Base">
+    <item name="android:background">@color/sanad_surface</item>
+    <item name="backgroundTint">@color/sanad_surface</item>
+    <item name="strokeColor">@color/sanad_surface</item>
+  </style>
+
+  <style name="Sanad.Card" parent="Widget.Material3.CardView.Elevated">
+    <item name="cardCornerRadius">22dp</item>
+    <item name="cardElevation">6dp</item>
+    <item name="cardBackgroundColor">@color/sanad_surface</item>
+    <item name="background">@color/sanad_surface</item>
+    <item name="android:clipToOutline" tools:targetApi="31">true</item>
+  </style>
+
+  <style name="ShapeAppearance.Sanad.Small" parent="ShapeAppearance.Material3.SmallComponent">
+    <item name="cornerSize">16dp</item>
+  </style>
+
+  <style name="ShapeAppearance.Sanad.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+    <item name="cornerSize">22dp</item>
+  </style>
+
+  <style name="ShapeAppearance.Sanad.Large" parent="ShapeAppearance.Material3.LargeComponent">
+    <item name="cornerSize">28dp</item>
+  </style>
+
+  <style name="Sanad.BottomNav.ActiveIndicator">
+    <item name="android:width">64dp</item>
+    <item name="android:height">36dp</item>
+    <item name="android:color">#33FFFFFF</item>
+    <item name="shapeAppearance">@style/ShapeAppearance.Sanad.Small</item>
+  </style>
+
+  <style name="Sanad.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+    <item name="itemActiveIndicatorStyle">@style/Sanad.BottomNav.ActiveIndicatorLight</item>
+    <item name="itemIconTint">@color/bottom_nav_light_selector</item>
+    <item name="itemTextColor">@color/bottom_nav_light_selector</item>
+    <item name="itemIconSize">24dp</item>
+    <item name="itemTextAppearanceActive">@style/Sanad.TextAppearance.LabelLarge</item>
+    <item name="itemTextAppearanceInactive">@style/Sanad.TextAppearance.LabelLarge</item>
+    <item name="itemRippleColor">@color/bottom_nav_ripple</item>
+    <item name="android:background">@color/sanad_tab_bar_bg</item>
+    <item name="backgroundTint">@color/sanad_tab_bar_bg</item>
+  </style>
+
+  <style name="Sanad.BottomNav.ActiveIndicatorLight">
+    <item name="android:width">64dp</item>
+    <item name="android:height">36dp</item>
+    <item name="android:color">@color/sanad_accent_soft</item>
+    <item name="shapeAppearance">@style/ShapeAppearance.Sanad.Small</item>
+  </style>
+
+  <style name="Sanad.TextAppearance.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+    <item name="android:fontFamily">@font/tajawal_bold</item>
+    <item name="fontFamily">@font/tajawal_bold</item>
+  </style>
+
+  <style name="Sanad.TextAppearance.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+    <item name="android:fontFamily">@font/tajawal_bold</item>
+    <item name="fontFamily">@font/tajawal_bold</item>
+  </style>
+
+  <style name="Sanad.TextAppearance.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+    <item name="android:fontFamily">@font/tajawal_regular</item>
+    <item name="fontFamily">@font/tajawal_regular</item>
+  </style>
+
+  <style name="Sanad.TextAppearance.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+    <item name="android:fontFamily">@font/tajawal_medium</item>
+    <item name="fontFamily">@font/tajawal_medium</item>
+  </style>
+
+  <style name="Sanad.Button.Filled" parent="Widget.Material3.Button">
+    <item name="android:minHeight">52dp</item>
+    <item name="cornerRadius">18dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:fontFamily">@font/tajawal_bold</item>
+    <item name="fontFamily">@font/tajawal_bold</item>
+    <item name="backgroundTint">?attr/sanadPrimary</item>
+    <item name="android:textColor">@color/sanad_on_primary</item>
+  </style>
+
+  <style name="Sanad.Card.Quiet" parent="Widget.Material3.CardView.Filled">
+    <item name="cardCornerRadius">18dp</item>
+    <item name="cardElevation">0dp</item>
+    <item name="strokeWidth">1dp</item>
+    <item name="strokeColor">@color/sanad_field_stroke</item>
+    <item name="cardBackgroundColor">@color/sanad_surface</item>
+  </style>
+
+  <style name="Widget.MaterialComponents.Button" parent="Widget.Material3.Button">
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:insetLeft">0dp</item>
+    <item name="android:insetRight">0dp</item>
+    <item name="cornerRadius">20dp</item>
+    <item name="android:paddingHorizontal">18dp</item>
+    <item name="android:paddingVertical">10dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">15sp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/tajawal_medium</item>
+    <item name="fontFamily">@font/tajawal_medium</item>
+    <item name="backgroundTint">@color/sanad_button_tint</item>
+    <item name="strokeColor">@color/sanad_button_tint</item>
+    <item name="strokeWidth">1dp</item>
+    <item name="android:textColor">@color/sanad_button_text_tint</item>
+  </style>
+
+  <style name="Widget.MaterialComponents.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:insetLeft">0dp</item>
+    <item name="android:insetRight">0dp</item>
+    <item name="cornerRadius">20dp</item>
+    <item name="android:paddingHorizontal">18dp</item>
+    <item name="android:paddingVertical">10dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">15sp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/tajawal_medium</item>
+    <item name="fontFamily">@font/tajawal_medium</item>
+    <item name="backgroundTint">@color/sanad_button_tint</item>
+    <item name="strokeColor">@color/sanad_button_tint</item>
+    <item name="strokeWidth">1dp</item>
+    <item name="android:textColor">@color/sanad_button_text_tint</item>
+  </style>
+
+  <style name="Widget.MaterialComponents.Button.TextButton" parent="Widget.Material3.Button.TextButton">
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="cornerRadius">18dp</item>
+    <item name="android:paddingHorizontal">14dp</item>
+    <item name="android:paddingVertical">8dp</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/tajawal_medium</item>
+    <item name="fontFamily">@font/tajawal_medium</item>
+    <item name="android:textColor">@color/sanad_button_text_tint</item>
+  </style>
+
+  <!-- fallback style name for legacy references -->
+  <style name="Sanad" parent="Theme.Sanad" />
+
+</resources>

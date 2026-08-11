@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/roleBootFragment">
+
+    <fragment
+        android:id="@+id/roleBootFragment"
+        android:name="com.brightpath.sanad.router.RoleBootFragment"
+        android:label="@string/app_name" />
+
+    <!-- Tabs الرئيسية -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.brightpath.sanad.feature.home.HomeFragment"
+        android:label="@string/nav_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="dashboard" />
+        <argument
+            android:name="allowRedirect"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientShortcutsFragment"
+        android:name="com.brightpath.sanad.feature.home.HomeFragment"
+        android:label="@string/app_name">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="shortcuts" />
+        <argument
+            android:name="allowRedirect"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_patient_shortcuts_community"
+            app:destination="@id/communityListFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_sessions"
+            app:destination="@id/sessionsFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_specialists"
+            app:destination="@id/patientSpecialistsFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_library"
+            app:destination="@id/libraryFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_chat"
+            app:destination="@id/chatListFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_wallet"
+            app:destination="@id/walletFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_book"
+            app:destination="@id/bookSessionFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_notifications"
+            app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_self_chat"
+            app:destination="@id/selfChatFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_intake"
+            app:destination="@id/patientIntakeFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_vent"
+            app:destination="@id/ventFragment" />
+        <action
+            android:id="@+id/action_patient_shortcuts_tasks"
+            app:destination="@id/patientTasksFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientDashboardFragment"
+        android:name="com.brightpath.sanad.feature.home.HomeFragment"
+        android:label="@string/nav_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="dashboard" />
+        <argument
+            android:name="allowRedirect"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.brightpath.sanad.feature.library.LibraryFragment"
+        android:label="@string/nav_library">
+        <action
+            android:id="@+id/action_library_to_article"
+            app:destination="@id/articleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityListFragment"
+        android:name="com.brightpath.sanad.feature.community.CommunityListFragment"
+        android:label="@string/nav_groups" >
+        <action
+            android:id="@+id/action_communityListFragment_to_communityFeedFragment"
+            app:destination="@id/communityFeedFragment" />
+        <action
+            android:id="@+id/action_communityListFragment_to_ventFragment"
+            app:destination="@id/ventFragment" />
+        <action
+            android:id="@+id/action_communityListFragment_to_anonymousMatchFragment"
+            app:destination="@id/anonymousMatchFragment" />
+        <action
+            android:id="@+id/action_communityListFragment_to_coachFragment"
+            app:destination="@id/coachFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="com.brightpath.sanad.feature.chat.ChatListFragment"
+        android:label="المحادثات"
+        tools:layout="@layout/fragment_chat_list" />
+    <fragment
+        android:id="@+id/chatRoomFragment"
+        android:name="com.brightpath.sanad.feature.chat.ChatRoomFragment">
+        <argument
+            android:name="chatId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="chatTitle"
+            app:argType="string" />
+        <argument
+            android:name="sessionId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="sessionEndsAt"
+            app:argType="string" />
+        <argument
+            android:name="canExtend"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.brightpath.sanad.feature.wallet.WalletFragment"
+        android:label="@string/nav_wallet" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.brightpath.sanad.feature.profile.ProfileFragment"
+        android:label="@string/nav_profile" />
+
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.brightpath.sanad.feature.profile.AboutUsFragment"
+        android:label="@string/menu_about_us"
+        tools:layout="@layout/fragment_simple_page" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.brightpath.sanad.feature.profile.PrivacyPolicyFragment"
+        android:label="@string/menu_privacy_policy"
+        tools:layout="@layout/fragment_simple_page" />
+    <fragment
+        android:id="@+id/contactUsFragment"
+        android:name="com.brightpath.sanad.feature.profile.ContactUsFragment"
+        android:label="@string/menu_contact_us"
+        tools:layout="@layout/fragment_simple_page" />
+    <fragment
+        android:id="@+id/languageSettingsFragment"
+        android:name="com.brightpath.sanad.feature.profile.LanguageSettingsFragment"
+        android:label="@string/menu_change_language"
+        tools:layout="@layout/fragment_language_settings" />
+    <fragment
+        android:id="@+id/themeSettingsFragment"
+        android:name="com.brightpath.sanad.feature.profile.ThemeSettingsFragment"
+        android:label="@string/menu_change_theme"
+        tools:layout="@layout/fragment_theme_settings" />
+
+    <fragment
+        android:id="@+id/patientSpecialistsFragment"
+        android:name="com.brightpath.sanad.feature.patient.PatientSpecialistsFragment"
+        android:label="@string/nav_specialists"
+        tools:layout="@layout/fragment_patient_specialists">
+        <action
+            android:id="@+id/action_patientSpecialists_to_detail"
+            app:destination="@id/patientSpecialistDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientSpecialistDetailFragment"
+        android:name="com.brightpath.sanad.feature.patient.PatientSpecialistDetailFragment"
+        android:label="@string/nav_specialists"
+        tools:layout="@layout/fragment_patient_specialist_detail">
+        <argument
+            android:name="specialistId"
+            app:argType="integer" />
+        <argument
+            android:name="specialistName"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="specialistMeta"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientIntakeFragment"
+        android:name="com.brightpath.sanad.feature.patient.PatientIntakeFragment"
+        android:label="@string/patient_intake_title"
+        tools:layout="@layout/fragment_patient_intake" />
+    <fragment
+        android:id="@+id/preSessionFragment"
+        android:name="com.brightpath.sanad.feature.patient.PreSessionFragment"
+        android:label="@string/pre_session_survey_title"
+        tools:layout="@layout/fragment_pre_session" />
+    <fragment
+        android:id="@+id/patientTasksFragment"
+        android:name="com.brightpath.sanad.feature.patient.PatientTasksFragment"
+        android:label="المتابعة"
+        tools:layout="@layout/fragment_patient_tasks" />
+
+    <!-- الجلسات -->
+    <fragment
+        android:id="@+id/sessionsFragment"
+        android:name="com.brightpath.sanad.feature.sessions.SessionsFragment" />
+
+    <fragment
+        android:id="@+id/groupsFragment"
+        android:name="com.brightpath.sanad.feature.groups.GroupsFragment"
+        android:label="@string/group_sessions_title"
+        tools:layout="@layout/fragment_groups" />
+
+    <fragment
+        android:id="@+id/groupDetailFragment"
+        android:name="com.brightpath.sanad.feature.groups.GroupDetailFragment"
+        tools:layout="@layout/fragment_group_detail">
+        <argument
+            android:name="groupId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/groupCreateFragment"
+        android:name="com.brightpath.sanad.feature.groups.GroupCreateFragment"
+        tools:layout="@layout/fragment_group_create" />
+
+    <fragment
+        android:id="@+id/groupSelectPatientsFragment"
+        android:name="com.brightpath.sanad.feature.groups.GroupSelectPatientsFragment"
+        tools:layout="@layout/fragment_group_select_patients" />
+
+    <!-- ✅ تصحيح: كلاس التفاصيل + تعريف باراميتر sessionId -->
+    <fragment
+        android:id="@+id/sessionDetailFragment"
+        android:name="com.brightpath.sanad.feature.sessions.SessionDetailFragment">
+        <argument
+            android:name="sessionId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="isSpecialist"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/specialistSessionDetailFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistSessionDetailFragment">
+        <argument
+            android:name="sessionId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="patientId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/specialistPatientFileFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistPatientFileFragment"
+        android:label="@string/specialist_patient_file"
+        tools:layout="@layout/fragment_specialist_patient_file">
+        <argument
+            android:name="sessionId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="patientId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/sessionJoinFragment"
+        android:name="com.brightpath.sanad.feature.sessions.SessionJoinFragment">
+        <argument
+            android:name="sessionId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sessionCallFragment"
+        android:name="com.brightpath.sanad.feature.sessions.SessionCallFragment"
+        tools:layout="@layout/fragment_session_call" />
+
+    <fragment
+        android:id="@+id/liveKitCallFragment"
+        android:name="com.brightpath.sanad.feature.sessions.LiveKitCallFragment"
+        tools:layout="@layout/fragment_livekit_call">
+        <argument
+            android:name="sessionId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="groupId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
+
+    <!-- Pickers -->
+    <fragment
+        android:id="@+id/selectSpecialistFragment"
+        android:name="com.brightpath.sanad.feature.sessions.SelectListFragment">
+        <argument
+            android:name="isSpecialists"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectOrganizationFragment"
+        android:name="com.brightpath.sanad.feature.sessions.SelectListFragment">
+        <argument
+            android:name="isSpecialists"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookSessionFragment"
+        android:name="com.brightpath.sanad.feature.sessions.BookSessionFragment" />
+
+    <fragment
+        android:id="@+id/calendarMonthFragment"
+        android:name="com.brightpath.sanad.feature.calendar.CalendarMonthFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_calendar_month" />
+
+    <!-- المكتبة -->
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="com.brightpath.sanad.feature.library.ArticleFragment" />
+
+    <!-- المجتمع -->
+    <fragment
+        android:id="@+id/communityFeedFragment"
+        android:name="com.brightpath.sanad.feature.community.CommunityFeedFragment">
+        <argument
+            android:name="communityId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="communityTitle"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="communitySlug"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selfChatFragment"
+        android:name="com.brightpath.sanad.feature.community.SelfChatFragment"
+        android:label="@string/self_chat_title"
+        tools:layout="@layout/fragment_self_chat" />
+
+    <fragment
+        android:id="@+id/ventFragment"
+        android:name="com.brightpath.sanad.feature.community.VentFragment"
+        android:label="@string/community_vent_title"
+        tools:layout="@layout/fragment_vent" />
+
+    <fragment
+        android:id="@+id/anonymousMatchFragment"
+        android:name="com.brightpath.sanad.feature.social.AnonymousMatchFragment"
+        android:label="@string/anonymous_match_title"
+        tools:layout="@layout/fragment_anonymous_match" />
+
+    <fragment
+        android:id="@+id/coachFragment"
+        android:name="com.brightpath.sanad.feature.coach.CoachFragment"
+        android:label="@string/coach_title"
+        tools:layout="@layout/fragment_coach" />
+
+    <fragment
+        android:id="@+id/coachDetailFragment"
+        android:name="com.brightpath.sanad.feature.coach.CoachDetailFragment"
+        android:label="@string/coach_title"
+        tools:layout="@layout/fragment_coach_detail">
+        <argument
+            android:name="programId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.brightpath.sanad.feature.notifications.NotificationsFragment"
+        android:label="@string/notifications_title"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/reportsFragment"
+        android:name="com.brightpath.sanad.feature.reports.ReportsFragment"
+        android:label="@string/fragment_reports_text_1"
+        tools:layout="@layout/fragment_reports" />
+
+    <fragment
+        android:id="@+id/paywallFragment"
+        android:name="com.brightpath.sanad.feature.billing.PaywallFragment"
+        android:label="@string/fragment_paywall_text_1"
+        tools:layout="@layout/fragment_paywall" />
+
+    <fragment
+        android:id="@+id/availabilityFragment"
+        android:name="com.brightpath.sanad.feature.calendar.AvailabilityFragment"
+        android:label="@string/specialist_action_availability"
+        tools:layout="@layout/fragment_availability" />
+
+    <!-- التقويم/المواعيد -->
+    <fragment
+        android:id="@+id/appointmentsListFragment"
+        android:name="com.brightpath.sanad.feature.calendar.AppointmentsListFragment" />
+
+    <!-- المنظمة -->
+    <fragment
+        android:id="@+id/orgHomeFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgHomeFragment"
+        android:label="المنظمة"
+        tools:layout="@layout/fragment_org_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orgShortcutsFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgHomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_org_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="shortcuts" />
+        <action
+            android:id="@+id/action_org_shortcuts_beneficiaries"
+            app:destination="@id/orgBeneficiariesFragment" />
+        <action
+            android:id="@+id/action_org_shortcuts_sessions"
+            app:destination="@id/orgSessionsFragment" />
+        <action
+            android:id="@+id/action_org_shortcuts_reports"
+            app:destination="@id/orgReportsFragment" />
+        <action
+            android:id="@+id/action_org_shortcuts_billing"
+            app:destination="@id/orgBillingFragment" />
+        <action
+            android:id="@+id/action_org_shortcuts_community_feed"
+            app:destination="@id/communityFeedFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orgDashboardFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgHomeFragment"
+        android:label="المنظمة"
+        tools:layout="@layout/fragment_org_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orgSpecialistsFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgSpecialistsFragment"
+        android:label="الأخصائيون"
+        tools:layout="@layout/fragment_org_specialists" />
+    <fragment
+        android:id="@+id/orgSpecialistDetailFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgSpecialistDetailFragment"
+        tools:layout="@layout/fragment_org_specialist_detail">
+        <argument
+            android:name="specialistId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orgSessionsFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgSessionsFragment"
+        android:label="الجلسات"
+        tools:layout="@layout/fragment_org_sessions" />
+
+    <fragment
+        android:id="@+id/orgBeneficiariesFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgBeneficiariesFragment"
+        android:label="المستفيدون"
+        tools:layout="@layout/fragment_org_beneficiaries">
+        <argument
+            android:name="openAdd"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_orgBeneficiariesFragment_to_orgBeneficiaryDetailFragment"
+            app:destination="@id/orgBeneficiaryDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orgBeneficiaryDetailFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgBeneficiaryDetailFragment"
+        tools:layout="@layout/fragment_org_beneficiary_detail">
+        <argument
+            android:name="beneficiaryId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/orgReportsFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgReportsFragment"
+        android:label="@string/org_reports_title"
+        tools:layout="@layout/fragment_org_reports" />
+    <fragment
+        android:id="@+id/orgBillingFragment"
+        android:name="com.brightpath.sanad.feature.org.OrgBillingFragment"
+        android:label="@string/org_billing_title"
+        tools:layout="@layout/fragment_org_billing" />
+
+    <!-- 🧠 شاشة الأخصائي الرئيسية -->
+    <fragment
+        android:id="@+id/specialistHomeFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistHomeFragment"
+        android:label="الأخصائي"
+        tools:layout="@layout/fragment_specialist_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/specialistShortcutsFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistShortcutsFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_specialist_shortcuts">
+        <action
+            android:id="@+id/action_specialist_shortcuts_sessions"
+            app:destination="@id/specialistSessionsFragment" />
+        <action
+            android:id="@+id/action_specialist_shortcuts_patients"
+            app:destination="@id/specialistPatientsFragment" />
+        <action
+            android:id="@+id/action_specialist_shortcuts_community"
+            app:destination="@id/communityListFragment" />
+        <action
+            android:id="@+id/action_specialist_shortcuts_library"
+            app:destination="@id/libraryFragment" />
+        <action
+            android:id="@+id/action_specialist_shortcuts_groups"
+            app:destination="@id/groupsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/specialistDashboardFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistHomeFragment"
+        android:label="الأخصائي"
+        tools:layout="@layout/fragment_specialist_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="dashboard" />
+    </fragment>
+
+    <!-- 🗓️ شاشة جلسات الأخصائي -->
+    <fragment
+        android:id="@+id/specialistSessionsFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistSessionsFragment"
+        android:label="جلسات الأخصائي"
+        tools:layout="@layout/fragment_specialist_sessions" />
+
+    <fragment
+        android:id="@+id/specialistPatientsFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistPatientsFragment"
+        android:label="@string/nav_patients"
+        tools:layout="@layout/fragment_specialist_patients">
+        <action
+            android:id="@+id/action_specialist_patients_to_file"
+            app:destination="@id/specialistPatientFileFragment" />
+    </fragment>
+
+    <!-- 👤 شاشة الملف الشخصي للأخصائي -->
+    <fragment
+        android:id="@+id/specialistProfileFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistProfileFragment"
+        android:label="الملف الشخصي"
+        tools:layout="@layout/fragment_specialist_profile" />
+    <fragment
+        android:id="@+id/specialistEditFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistEditFragment"
+        android:label="@string/specialist_edit_title"
+        tools:layout="@layout/fragment_specialist_edit" />
+    <fragment
+        android:id="@+id/specialistInfoFragment"
+        android:name="com.brightpath.sanad.feature.specialist.SpecialistInfoFragment"
+        android:label="@string/specialist_info_title"
+        tools:layout="@layout/fragment_specialist_info" />
+
+    <!-- لوحة المشرف (Admin) -->
+    <fragment
+        android:id="@+id/adminHomeFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminHomeFragment"
+        android:label="لوحة المشرف"
+        tools:layout="@layout/fragment_admin_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminShortcutsFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminHomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_admin_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="shortcuts" />
+        <action
+            android:id="@+id/action_admin_shortcuts_specialists"
+            app:destination="@id/adminSpecialistsFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_orgs"
+            app:destination="@id/adminOrganizationsFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_sessions"
+            app:destination="@id/adminSessionsFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_users"
+            app:destination="@id/adminUsersFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_library"
+            app:destination="@id/adminLibraryFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_reports"
+            app:destination="@id/reportsFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_wallet"
+            app:destination="@id/adminWalletFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_vent"
+            app:destination="@id/adminVentFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_daily_tips"
+            app:destination="@id/adminDailyTipsFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_settings"
+            app:destination="@id/adminProfileFragment" />
+        <action
+            android:id="@+id/action_admin_shortcuts_community"
+            app:destination="@id/communityListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminDashboardFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminHomeFragment"
+        android:label="لوحة المشرف"
+        tools:layout="@layout/fragment_admin_home">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminSpecialistsFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminSpecialistsFragment"
+        android:label="أخصائيون"
+        tools:layout="@layout/fragment_admin_specialists" />
+
+    <fragment
+        android:id="@+id/adminOrganizationsFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminOrganizationsFragment"
+        android:label="منظمات"
+        tools:layout="@layout/fragment_admin_organizations">
+        <action
+            android:id="@+id/action_adminOrganizationsFragment_to_adminOrganizationDetailFragment"
+            app:destination="@id/adminOrganizationDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminOrganizationDetailFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminOrganizationDetailFragment"
+        tools:layout="@layout/fragment_admin_organization_detail">
+        <argument
+            android:name="organizationId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminUsersFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminUsersFragment"
+        android:label="مستخدمون"
+        tools:layout="@layout/fragment_admin_users" />
+
+    <fragment
+        android:id="@+id/adminSessionsFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminSessionsFragment"
+        android:label="جلسات النظام"
+        tools:layout="@layout/fragment_admin_sessions" >
+        <argument
+            android:name="specialistId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="specialistName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminLibraryFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminLibraryFragment"
+        android:label="مكتبة المحتوى"
+        tools:layout="@layout/fragment_admin_library" />
+
+    <fragment
+        android:id="@+id/adminProfileFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminProfileFragment"
+        android:label="@string/admin_profile_title"
+        tools:layout="@layout/fragment_admin_profile" />
+
+    <fragment
+        android:id="@+id/adminWalletFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminWalletFragment"
+        android:label="@string/admin_wallet_title"
+        tools:layout="@layout/fragment_admin_wallet" />
+
+    <fragment
+        android:id="@+id/adminSettingsFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminSettingsFragment"
+        android:label="@string/admin_settings_title"
+        tools:layout="@layout/fragment_admin_settings" />
+
+    <fragment
+        android:id="@+id/adminVentFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminVentFragment"
+        android:label="@string/admin_vent_title"
+        tools:layout="@layout/fragment_admin_vent" />
+
+    <fragment
+        android:id="@+id/adminDailyTipsFragment"
+        android:name="com.brightpath.sanad.feature.admin.AdminDailyTipsFragment"
+        android:label="@string/admin_daily_tips_title"
+        tools:layout="@layout/fragment_admin_daily_tips" />
+
+    <!-- Global navigation from shortcut grids (all roles) -->
+    <action
+        android:id="@+id/action_global_specialist_sessions"
+        app:destination="@id/specialistSessionsFragment" />
+    <action
+        android:id="@+id/action_global_specialist_patients"
+        app:destination="@id/specialistPatientsFragment" />
+    <action
+        android:id="@+id/action_global_community_list"
+        app:destination="@id/communityListFragment" />
+    <action
+        android:id="@+id/action_global_groups"
+        app:destination="@id/groupsFragment" />
+    <action
+        android:id="@+id/action_global_library"
+        app:destination="@id/libraryFragment" />
+    <action
+        android:id="@+id/action_global_chat_list"
+        app:destination="@id/chatListFragment" />
+    <action
+        android:id="@+id/action_global_availability"
+        app:destination="@id/availabilityFragment" />
+    <action
+        android:id="@+id/action_global_notifications"
+        app:destination="@id/notificationsFragment" />
+    <action
+        android:id="@+id/action_global_sessions"
+        app:destination="@id/sessionsFragment" />
+    <action
+        android:id="@+id/action_global_patient_specialists"
+        app:destination="@id/patientSpecialistsFragment" />
+    <action
+        android:id="@+id/action_global_wallet"
+        app:destination="@id/walletFragment" />
+    <action
+        android:id="@+id/action_global_vent"
+        app:destination="@id/ventFragment" />
+    <action
+        android:id="@+id/action_global_patient_tasks"
+        app:destination="@id/patientTasksFragment" />
+
+</navigation>

@@ -1,0 +1,9 @@
+<resources>
+    <attr name="sanadPrimary" format="color" />
+    <attr name="sanadPrimaryDark" format="color" />
+    <attr name="sanadSecondary" format="color" />
+    <attr name="sanadSecondaryDark" format="color" />
+    <attr name="sanadBgGradientStart" format="color" />
+    <attr name="sanadBgGradientEnd" format="color" />
+    <attr name="sanadButtonPrime" format="color" />
+</resources>

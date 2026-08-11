@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="175.73dp"
+    android:height="93.17dp"
+    android:viewportWidth="175.73"
+    android:viewportHeight="93.17"
+    android:autoMirrored="true">
+    <path
+        android:fillColor="?attr/sanadPrimary"
+        android:pathData="M175.73,0v40.84c0,14.45-11.71,26.16-26.17,26.16H26.16C11.71,67,0,78.72,0,93.17V0C0,0,11.71,0,26.16,0h123.4c14.46,0,26.17,0,26.17,0Z"/>
+</vector>

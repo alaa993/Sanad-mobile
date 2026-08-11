@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/sanad_surface"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <TextView
+        android:id="@+id/tvSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/sanad_input_hint"
+        android:textSize="12sp"
+        android:paddingStart="8dp"
+        android:paddingBottom="2dp" />
+
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_message_bubble"
+        android:textColor="@color/sanad_on_bg"
+        android:textSize="15sp"
+        android:padding="10dp" />
+
+    <ImageView
+        android:id="@+id/imgBody"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_message_bubble" />
+
+    <TextView
+        android:id="@+id/tvMeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/sanad_input_hint"
+        android:textSize="11sp" />
+</LinearLayout>

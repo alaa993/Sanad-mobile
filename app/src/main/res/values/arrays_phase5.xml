@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="anonymous_genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="anonymous_preferences">
+        <item>Any</item>
+        <item>Same gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="coach_categories">
+        <item>Vitamins &amp; wellness</item>
+        <item>Weight management</item>
+        <item>General wellness</item>
+    </string-array>
+</resources>

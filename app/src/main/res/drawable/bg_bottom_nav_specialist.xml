@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- ظل خفيف لرفع الناف بار عن الخلفية -->
+    <item android:top="1dp" android:left="1dp" android:right="1dp">
+        <shape android:shape="rectangle">
+            <corners android:topLeftRadius="20dp" android:topRightRadius="20dp" />
+            <gradient
+                android:startColor="#1A2C4A"
+                android:endColor="#0F1A2F"
+                android:angle="90" />
+            <alpha android:value="30" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#FDFEFF"
+                android:endColor="#E9F2FF"
+                android:angle="90" />
+            <corners android:topLeftRadius="20dp" android:topRightRadius="20dp" />
+            <stroke android:width="1dp" android:color="#C7D6F8"/>
+            <padding android:top="6dp" android:bottom="10dp" android:left="12dp" android:right="12dp"/>
+            <size android:height="58dp" />
+        </shape>
+    </item>
+</layer-list>

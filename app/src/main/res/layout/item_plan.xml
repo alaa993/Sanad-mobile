@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@color/sanad_surface" android:orientation="vertical" android:padding="12dp">
+  <TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:textStyle="bold"/>
+  <TextView android:id="@+id/tvPrice" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <Button android:id="@+id/btnChoose" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/item_plan_text_1"/>
+</LinearLayout>

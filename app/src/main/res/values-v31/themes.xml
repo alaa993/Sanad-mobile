@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Sanad.StatCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">26dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardUseCompatPadding">false</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="strokeColor">@color/sanad_chip_bg</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardBackgroundColor">@color/sanad_surface_alt</item>
+        <item name="android:clipToOutline">true</item>
+        <item name="background">@color/sanad_surface</item>
+    </style>
+</resources>

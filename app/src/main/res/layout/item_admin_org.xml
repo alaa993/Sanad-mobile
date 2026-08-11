@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@color/sanad_surface" android:orientation="vertical" android:padding="8dp">
+  <TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:textStyle="bold"/>
+  <TextView android:id="@+id/tvMeta" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="2dp"/>
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingTop="6dp">
+    <Button android:id="@+id/btnApprove" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/item_admin_org_text_1"/>
+    <Space android:layout_width="12dp" android:layout_height="1dp"/>
+    <Button android:id="@+id/btnReject" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/item_admin_org_text_2"/>
+  </LinearLayout>
+</LinearLayout>

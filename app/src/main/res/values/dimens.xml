@@ -1,0 +1,7 @@
+<!-- dimens.xml -->
+<resources>
+    <dimen name="gap_8">8dp</dimen>
+    <dimen name="gap_12">12dp</dimen>
+    <dimen name="gap_16">16dp</dimen>
+    <dimen name="gap_24">24dp</dimen>
+</resources>

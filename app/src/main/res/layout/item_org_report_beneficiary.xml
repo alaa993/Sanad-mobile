@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="@color/sanad_surface_alt">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sanad_on_bg"
+            android:textStyle="bold"
+            android:text="@string/item_org_report_beneficiary_text_1" />
+
+        <TextView
+            android:id="@+id/tvRisk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/sanad_secondary"
+            android:text="@string/item_org_report_beneficiary_text_2" />
+
+        <TextView
+            android:id="@+id/tvIssue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/sanad_neutral"
+            android:text="@string/item_org_report_beneficiary_text_3" />
+
+        <TextView
+            android:id="@+id/tvLastSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/sanad_neutral"
+            android:text="@string/item_org_report_beneficiary_text_4" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

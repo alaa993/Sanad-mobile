@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/patientDashboardFragment" android:title="@string/nav_home" android:icon="@drawable/ic_home"/>
+    <item android:id="@+id/patientShortcutsFragment" android:title="@string/nav_care" android:icon="@drawable/ic_care"/>
+    <item android:id="@+id/profileFragment" android:title="@string/nav_me" android:icon="@drawable/ic_profile"/>
+</menu>
