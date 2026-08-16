@@ -13,14 +13,14 @@ public class User {
     public OrgProfile org_profile;
 
     public static class OrgProfile {
-        public int id;
+        public Integer id;
         public String name;
         public String status;
         public String review_notes;
         public String about;
-        public int members;
-        public int specialists;
-        public int beneficiaries;
-        public int wallet_points;
+        public Integer members;
+        public Integer specialists;
+        public Integer beneficiaries;
+        public Integer wallet_points;
     }
 }

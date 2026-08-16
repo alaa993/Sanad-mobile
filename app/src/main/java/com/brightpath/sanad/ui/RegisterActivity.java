@@ -281,6 +281,10 @@ public class RegisterActivity extends AppCompatActivity {
             if (nameMsg.toLowerCase(Locale.US).contains("at least") || nameMsg.contains("2")) {
                 return getString(R.string.register_error_name_short);
             }
+            String lowerName = nameMsg.toLowerCase(Locale.US);
+            if (lowerName.contains("already") || lowerName.contains("taken") || lowerName.contains("unique") || lowerName.contains("exists")) {
+                return getString(R.string.register_error_name_exists);
+            }
             return nameMsg;
         }
         String emailMsg = firstFieldError(errors, "email");
