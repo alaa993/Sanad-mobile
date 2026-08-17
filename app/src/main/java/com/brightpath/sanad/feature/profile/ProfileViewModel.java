@@ -61,14 +61,11 @@ public class ProfileViewModel extends AndroidViewModel {
                 }
                 state.postValue(UIState.data(user));
             } catch (com.brightpath.sanad.data.auth.AuthException authEx) {
-                // Keep cached profile on screen for active users; SessionGuard /me
-                // owns hard logout. Clearing mid-profile caused MIUI force-closes.
+                // Keep cached profile on screen. Only /api/auth/me 401 (AuthInterceptor)
+                // may clear the session — never 403/404/parse errors on Xiaomi/HyperOS.
                 User fallback = current != null && current.data != null ? current.data : cachedUser();
                 if (fallback != null) {
                     state.postValue(UIState.data(fallback));
-                } else if (authEx.code == 401 || authEx.code == 403 || authEx.code == 404) {
-                    tokens.clear();
-                    state.postValue(UIState.error(authEx.getMessage()));
                 } else {
                     state.postValue(UIState.error(authEx.getMessage()));
                 }

@@ -8,6 +8,7 @@ import com.brightpath.sanad.models.LoginRequest;
 import com.brightpath.sanad.models.LoginResponse;
 import com.brightpath.sanad.models.User;
 import com.brightpath.sanad.models.RegisterRequest;
+import com.brightpath.sanad.data.SafeGson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.Interceptor;
@@ -37,9 +38,7 @@ public class AuthRepository {
         this.tokens = new TokenStore(ctx);
         OkHttpClient client = sharedClient(ctx.getApplicationContext());
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+        Gson gson = SafeGson.get();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ensureTrailingSlash(baseUrl))
@@ -111,6 +110,7 @@ public class AuthRepository {
 
             Request.Builder builder = original.newBuilder()
                     .header("Accept", "application/json")
+                    .header("User-Agent", "SanadAndroid/1.0.14")
                     .header("Connection", "keep-alive");
             if (publicAuth) {
                 builder.removeHeader("Authorization");
@@ -215,7 +215,7 @@ public class AuthRepository {
         if (r.isSuccessful()) {
             User body = r.body();
             if (body == null || body.id <= 0) {
-                throw new AuthException(r.code() > 0 ? r.code() : 500, null, "empty_user", null);
+                throw new IOException("empty_user");
             }
             return body;
         }
@@ -328,15 +328,15 @@ public class AuthRepository {
         try {
             Response<User> response = api.me().execute();
             if (!response.isSuccessful()) {
-                int code = response.code();
-                if (code == 401 || code == 403 || code == 404) {
+                // Only a true unauthenticated response ends the session.
+                // 403/404/HTML from OEM proxies must not bounce active users to login.
+                if (response.code() == 401) {
                     tokens.clear();
                 }
                 return;
             }
             User user = response.body();
             if (user == null || user.id <= 0) {
-                tokens.clear();
                 return;
             }
             if (user.role != null) tokens.saveRole(user.role);
@@ -344,25 +344,8 @@ public class AuthRepository {
             if (user.name != null) tokens.saveUserName(user.name);
             if (user.email != null) tokens.saveUserEmail(user.email);
         } catch (Throwable t) {
-            if (isParseFailure(t)) {
-                // Schema drift after upgrade — drop the stale session instead of crashing later.
-                tokens.clear();
-            }
-            // Network blips / unexpected errors: keep token; never crash the caller.
+            // Network / parse glitches (common on HyperOS): keep the token.
         }
-    }
-
-    private static boolean isParseFailure(Throwable t) {
-        for (Throwable c = t; c != null; c = c.getCause()) {
-            if (c instanceof com.google.gson.JsonParseException) {
-                return true;
-            }
-            String name = c.getClass().getName();
-            if (name.contains("JsonParse") || name.contains("MalformedJson") || name.contains("JsonSyntax")) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void persistAuth(LoginResponse response){

@@ -91,8 +91,8 @@ public class SpecialistEditFragment extends Fragment {
     vm.state.observe(getViewLifecycleOwner(), p -> {
       if (p == null) return;
       etSpec.setText(p.specialty==null?"":p.specialty);
-      etYears.setText(String.valueOf(p.years_exp));
-      etRate.setText(String.valueOf(p.rate_cents));
+      etYears.setText(p.years_exp != null ? String.valueOf(p.years_exp) : "");
+      etRate.setText(p.rate_cents != null ? String.valueOf(p.rate_cents) : "");
       etCurrency.setText(p.currency);
       swAccepting.setChecked(SpecialistModels.isAccepting(p.accepting_new));
       currentAvatarUrl = p.avatar;

@@ -59,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
         try {
             setContentView(R.layout.activity_main);
         } catch (Throwable t) {
-            goToLoginClearedSession();
+            try {
+                Intent intent = new Intent(this, SplashActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            } catch (Throwable ignored) {}
+            finish();
             return;
         }
 

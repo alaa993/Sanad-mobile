@@ -33,15 +33,14 @@ public final class RealtimeSocketOptions {
         if (role != null && !role.isEmpty()) auth.put("role", role);
         if (token != null && !token.isEmpty()) auth.put("token", token);
         options.auth = auth;
-        options.query = buildQuery(userId, role, token);
+        options.query = buildQuery(userId, role);
         return options;
     }
 
-    private static String buildQuery(int userId, String role, String token) {
+    private static String buildQuery(int userId, String role) {
         StringBuilder builder = new StringBuilder();
         appendQuery(builder, "userId", userId > 0 ? String.valueOf(userId) : null);
         appendQuery(builder, "role", role);
-        appendQuery(builder, "token", token);
         return builder.toString();
     }
 

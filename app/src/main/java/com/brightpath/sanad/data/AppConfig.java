@@ -69,8 +69,11 @@ public class AppConfig extends Application {
             return null;
         }
         String trimmed = path.trim();
-        if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+        if (trimmed.startsWith("https://")) {
             return trimmed;
+        }
+        if (trimmed.startsWith("http://")) {
+            return "https://" + trimmed.substring("http://".length());
         }
         if (trimmed.startsWith("/")) {
             return BASE_URL + trimmed;

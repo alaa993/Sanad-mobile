@@ -325,7 +325,10 @@ public class ProfileFragment extends Fragment {
         if (status == null && org != null) status = org.status;
         if (tvOrgStatus != null) tvOrgStatus.setText(getString(R.string.profile_org_status_fmt, statusLabel(status)));
         if (tvOrgStats != null && org != null) {
-            tvOrgStats.setText(getString(R.string.profile_org_stats_fmt, org.members, org.specialists, org.beneficiaries));
+            int members = org.members != null ? org.members : 0;
+            int specialists = org.specialists != null ? org.specialists : 0;
+            int beneficiaries = org.beneficiaries != null ? org.beneficiaries : 0;
+            tvOrgStats.setText(getString(R.string.profile_org_stats_fmt, members, specialists, beneficiaries));
         } else if (tvOrgStats != null) {
             tvOrgStats.setText("");
         }

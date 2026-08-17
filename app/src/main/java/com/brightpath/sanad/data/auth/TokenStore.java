@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Local session store. Clearing the token notifies {@link #setSessionListener} so the UI
- * can leave to Login immediately when a deleted/expired account is detected.
+ * Local session store. Prefs are app-private; backup/transfer is disabled in the manifest.
+ * EncryptedSharedPreferences is not used: androidx.security:security-crypto is often
+ * missing from Maven mirrors, and OEM Keystore (Xiaomi/HyperOS) already forced a fallback.
  */
 public class TokenStore {
     public interface SessionListener {
@@ -23,7 +24,7 @@ public class TokenStore {
     private final SharedPreferences sp;
 
     public TokenStore(Context context) {
-        sp = context.getApplicationContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        this.sp = context.getApplicationContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
     }
 
     public static void setSessionListener(SessionListener listener) {
@@ -66,7 +67,7 @@ public class TokenStore {
                 .remove(KEY_USER_ID)
                 .remove(KEY_USER_NAME)
                 .remove(KEY_USER_EMAIL)
-                .apply();
+                .commit();
         try {
             SessionGuard.invalidateCache();
         } catch (Throwable ignored) {}

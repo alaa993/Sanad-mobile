@@ -47,10 +47,11 @@ public class SpecialistInfoFragment extends Fragment {
       show(content);
       tvName.setText(!TextUtils.isEmpty(p.name) ? p.name : getString(R.string.profile_name_placeholder));
       tvSpecialty.setText(safe(p.specialty));
-      tvYears.setText(String.valueOf(p.years_exp));
-      if (p.rate_cents > 0) {
+      tvYears.setText(p.years_exp != null ? String.valueOf(p.years_exp) : getString(R.string.specialist_not_set));
+      int rateCents = p.rate_cents != null ? p.rate_cents : 0;
+      if (rateCents > 0) {
         String curr = !TextUtils.isEmpty(p.currency) ? p.currency.toUpperCase() : "USD";
-        tvRate.setText(getString(R.string.specialist_rate_format, curr, (p.rate_cents / 100f)));
+        tvRate.setText(getString(R.string.specialist_rate_format, curr, (rateCents / 100f)));
       } else {
         tvRate.setText(getString(R.string.specialist_not_set));
       }

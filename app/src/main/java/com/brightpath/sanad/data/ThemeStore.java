@@ -69,6 +69,7 @@ public class ThemeStore {
             if (window == null) return;
             window.setStatusBarColor(chromeStatusBarColor(activity));
             window.setNavigationBarColor(chromeNavigationBarColor(activity));
+            WindowCompat.setDecorFitsSystemWindows(window, true);
             WindowInsetsControllerCompat controller =
                     WindowCompat.getInsetsController(window, window.getDecorView());
             if (controller != null) {

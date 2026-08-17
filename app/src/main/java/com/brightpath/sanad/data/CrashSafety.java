@@ -42,11 +42,20 @@ public final class CrashSafety {
                 // Do NOT clear a valid session on every crash — only navigate to recovery.
             } catch (Throwable ignored) {}
             try {
-                Intent intent = new Intent(app, LoginActivity.class);
+                boolean hasSession = false;
+                try {
+                    hasSession = new TokenStore(app).hasToken();
+                } catch (Throwable ignored) {}
+                // Xiaomi/HyperOS profile crashes must not dump a still-logged-in user on Login.
+                Intent intent = new Intent(app, hasSession
+                        ? com.brightpath.sanad.ui.MainActivity.class
+                        : LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                         | Intent.FLAG_ACTIVITY_CLEAR_TASK
                         | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("recovery_after_crash", true);
+                if (!hasSession) {
+                    intent.putExtra("recovery_after_crash", true);
+                }
                 app.startActivity(intent);
             } catch (Throwable ignored) {}
             try {

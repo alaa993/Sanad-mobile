@@ -3,6 +3,7 @@ package com.brightpath.sanad.ui.tour;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -51,6 +52,11 @@ public class CoachMarkManager {
 
     public static void showIfNeeded(Activity activity, String key, List<CoachMarkStep> steps) {
         if (!isActivityUsable(activity) || key == null || steps == null || steps.isEmpty()) return;
+        if (isXiaomiFamily()) {
+            // Overlay tips crash some HyperOS GPUs (Redmi Note 14 etc.) and recover to Login.
+            markSeen(activity, key);
+            return;
+        }
         SharedPreferences prefs;
         try {
             prefs = activity.getSharedPreferences(PREF, Context.MODE_PRIVATE);
@@ -228,6 +234,21 @@ public class CoachMarkManager {
         if (activity == null) return false;
         try {
             return !activity.isFinishing() && !activity.isDestroyed();
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
+    private static boolean isXiaomiFamily() {
+        try {
+            String manufacturer = Build.MANUFACTURER != null ? Build.MANUFACTURER.toLowerCase() : "";
+            String brand = Build.BRAND != null ? Build.BRAND.toLowerCase() : "";
+            return manufacturer.contains("xiaomi")
+                    || manufacturer.contains("redmi")
+                    || manufacturer.contains("poco")
+                    || brand.contains("xiaomi")
+                    || brand.contains("redmi")
+                    || brand.contains("poco");
         } catch (Throwable t) {
             return false;
         }

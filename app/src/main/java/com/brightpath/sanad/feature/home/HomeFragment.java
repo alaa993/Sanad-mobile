@@ -524,7 +524,7 @@ public class HomeFragment extends Fragment {
 
 
     private void navigate(DashboardResponse.Shortcut s) {
-        ShortcutNavigator.navigate(this, currentRole, s);
+        AppNavigator.goShortcut(this, currentRole, s);
     }
 
     private Integer destinationForShortcut(DashboardResponse.Shortcut shortcut) {
@@ -546,7 +546,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void navigateToDestination(int destination, @Nullable Bundle args){
-        ShortcutNavigator.navigate(this, currentRole, destination, args);
+        AppNavigator.go(this, currentRole, destination, args);
     }
 
     private void openSessionDetail(int sessionId){

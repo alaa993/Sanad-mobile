@@ -106,12 +106,13 @@ public class SpecialistProfileFragment extends Fragment {
         tvSpecialty.setText(!TextUtils.isEmpty(p.specialty) ? p.specialty : getString(R.string.specialist_not_set));
       }
       if (tvYears != null) {
-        tvYears.setText(getString(R.string.specialist_years_format, p.years_exp));
+        tvYears.setText(getString(R.string.specialist_years_format, p.years_exp != null ? p.years_exp : 0));
       }
       if (tvRate != null) {
-        if (p.rate_cents > 0) {
+        int rateCents = p.rate_cents != null ? p.rate_cents : 0;
+        if (rateCents > 0) {
           String curr = !TextUtils.isEmpty(p.currency) ? p.currency.toUpperCase(Locale.ROOT) : "USD";
-          tvRate.setText(getString(R.string.specialist_rate_format, curr, (p.rate_cents / 100f)));
+          tvRate.setText(getString(R.string.specialist_rate_format, curr, (rateCents / 100f)));
         } else {
           tvRate.setText(getString(R.string.specialist_not_set));
         }

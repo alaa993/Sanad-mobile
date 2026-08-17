@@ -15,6 +15,7 @@
     <item name="android:navigationBarColor">@color/sanad_tab_bar_bg</item>
     <item name="android:windowLightStatusBar">true</item>
     <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
     <item name="android:fontFamily">@font/tajawal_family</item>
     <item name="fontFamily">@font/tajawal_family</item>
     <item name="textAppearanceHeadlineLarge">@style/Sanad.TextAppearance.HeadlineLarge</item>
@@ -42,6 +43,7 @@
     <item name="android:navigationBarColor">@color/sanad_tab_bar_bg</item>
     <item name="android:windowLightStatusBar">true</item>
     <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
   </style>
 
   <style name="ThemeOverlay.Sanad" parent="ThemeOverlay.Material3" />

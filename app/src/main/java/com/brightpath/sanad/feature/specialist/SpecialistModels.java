@@ -18,7 +18,7 @@ public class SpecialistModels {
     public String rejection_by;
   }
   public static class Appointments { public java.util.List<Appointment> data; }
-  public static class Profile { public int id; public int user_id; public String name; public String email; public String avatar; public boolean requires_avatar; public String specialty; public java.util.List<String> languages; public int years_exp; public Object accepting_new; public java.util.Map<String,String> bio; public int rate_cents; public String currency; public String status; public String verification_notes; }
+  public static class Profile { public Integer id; public Integer user_id; public String name; public String email; public String avatar; public boolean requires_avatar; public String specialty; public java.util.List<String> languages; public Integer years_exp; public Object accepting_new; public java.util.Map<String,String> bio; public Integer rate_cents; public String currency; public String status; public String verification_notes; }
   public static class DocumentList { public String status; public String verification_notes; public java.util.List<Document> documents; }
   public static class Document { public int id; public String type; public String title; public String file_path; public String verified_at; public Meta meta; }
   public static class Meta { public String original_name; public String mime; }

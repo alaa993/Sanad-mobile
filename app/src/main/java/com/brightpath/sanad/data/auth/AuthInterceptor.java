@@ -22,7 +22,8 @@ public class AuthInterceptor implements Interceptor {
         Request original = chain.request();
         String token = tokenStore.getToken();
         Request.Builder builder = original.newBuilder()
-                .addHeader("Accept", "application/json");
+                .header("Accept", "application/json")
+                .header("User-Agent", "SanadAndroid/1.0.14");
         if (token != null) {
             token = token.trim();
             if (!token.isEmpty()) {
