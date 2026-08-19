@@ -39,7 +39,7 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <com.google.android.material.materialswitch.MaterialSwitch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchPushEnabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

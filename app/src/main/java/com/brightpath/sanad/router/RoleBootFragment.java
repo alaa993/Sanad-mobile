@@ -28,8 +28,19 @@ public class RoleBootFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         view.post(() -> {
             if (!isAdded()) return;
+            try {
+                androidx.navigation.NavController nav =
+                        NavHostFragment.findNavController(this);
+                if (nav.getCurrentDestination() != null
+                        && nav.getCurrentDestination().getId() != R.id.roleBootFragment) {
+                    return;
+                }
+            } catch (Throwable ignored) {}
             String role = new TokenStore(requireContext()).getRole();
             int destination = RoleRouter.startDestinationFor(role);
+            try {
+                destination = NavRestore.takePending(requireContext(), destination);
+            } catch (Throwable ignored) {}
             NavOptions options = new NavOptions.Builder()
                     .setLaunchSingleTop(true)
                     .setPopUpTo(R.id.roleBootFragment, true)
@@ -39,10 +50,8 @@ public class RoleBootFragment extends Fragment {
             } catch (IllegalArgumentException first) {
                 try {
                     NavHostFragment.findNavController(this)
-                            .navigate(R.id.patientShortcutsFragment, null, options);
-                } catch (Exception ignored) {
-                    // Last resort: leave empty boot view rather than crash.
-                }
+                            .navigate(RoleRouter.startDestinationFor(role), null, options);
+                } catch (Exception ignored) {}
             } catch (Exception ignored) {}
         });
     }

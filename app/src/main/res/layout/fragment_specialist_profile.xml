@@ -429,7 +429,7 @@
                 android:layout_marginTop="8dp"
                 android:descendantFocusability="blocksDescendants"
                 app:singleSelection="true"
-                app:selectionRequired="true">
+                app:selectionRequired="false">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnLangArabic"
@@ -493,8 +493,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:singleSelection="true"
-                app:checkedButton="@id/btnThemeSanad"
-                app:selectionRequired="true">
+                app:selectionRequired="false">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnThemeSanad"
@@ -832,13 +831,17 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/logout"
                 android:textAllCaps="false"
-                android:textColor="@color/sanad_surface"
-                android:background="@drawable/bg_profile_logout" />
+                android:textColor="@color/sanad_on_bg"
+                app:backgroundTint="@color/profile_logout_bg"
+                app:cornerRadius="22dp"
+                app:elevation="0dp"
+                app:strokeWidth="0dp" />
 
             </LinearLayout>
         </LinearLayout>

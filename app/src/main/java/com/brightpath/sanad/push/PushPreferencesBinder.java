@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import androidx.fragment.app.Fragment;
 import com.brightpath.sanad.R;
-import com.google.android.material.materialswitch.MaterialSwitch;
 
 public final class PushPreferencesBinder {
     private static final String PREF = "push_prefs_local";
@@ -15,7 +14,7 @@ public final class PushPreferencesBinder {
     private PushPreferencesBinder() {}
 
     public static void bind(Fragment fragment, View root) {
-        MaterialSwitch switchPushEnabled = root.findViewById(R.id.switchPushEnabled);
+        CompoundButton switchPushEnabled = root.findViewById(R.id.switchPushEnabled);
         if (switchPushEnabled == null) return;
 
         Context ctx = fragment.requireContext().getApplicationContext();
@@ -41,7 +40,7 @@ public final class PushPreferencesBinder {
 
     private static void applySwitchOnUi(
             Fragment fragment,
-            MaterialSwitch switchPushEnabled,
+            CompoundButton switchPushEnabled,
             PushDeviceRepository pushRepo,
             SharedPreferences prefs,
             boolean enabled
@@ -59,7 +58,7 @@ public final class PushPreferencesBinder {
 
     private static void attachListener(
             Fragment fragment,
-            MaterialSwitch switchPushEnabled,
+            CompoundButton switchPushEnabled,
             PushDeviceRepository pushRepo,
             SharedPreferences prefs
     ) {

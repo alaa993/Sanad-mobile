@@ -23,7 +23,6 @@ import com.brightpath.sanad.data.AppConfig;
 import com.brightpath.sanad.data.auth.AuthRepository;
 import com.brightpath.sanad.data.auth.TokenStore;
 import com.brightpath.sanad.data.LanguageUiHelper;
-import com.brightpath.sanad.data.ThemeStore;
 import com.brightpath.sanad.models.User;
 import com.brightpath.sanad.ui.ChangePasswordDialogHelper;
 import com.brightpath.sanad.ui.LoginActivity;
@@ -45,11 +44,28 @@ public class ProfileFragment extends Fragment {
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        try {
+            return ProfileScreenViews.inflate(inflater, container, R.layout.fragment_profile, this);
+        } catch (Throwable ignored) {
+            android.widget.FrameLayout root = new android.widget.FrameLayout(inflater.getContext());
+            android.widget.TextView label = new android.widget.TextView(inflater.getContext());
+            label.setText(R.string.nav_profile);
+            label.setPadding(48, 48, 48, 48);
+            root.addView(label);
+            return root;
+        }
     }
 
     @Override public void onViewCreated(@NonNull View v, @Nullable Bundle s){
         super.onViewCreated(v, s);
+        try {
+            bindProfileUi(v);
+        } catch (Throwable ignored) {
+            // Never let profile setup take down MainActivity (HyperOS recover-to-home).
+        }
+    }
+
+    private void bindProfileUi(@NonNull View v) {
         content = v.findViewById(R.id.content);
         errorContainer = v.findViewById(R.id.errorContainer);
         progress = v.findViewById(R.id.progress);
@@ -75,6 +91,7 @@ public class ProfileFragment extends Fragment {
 
         MaterialButton btnRetry = v.findViewById(R.id.btnRetry);
         MaterialButton btnLogout = v.findViewById(R.id.btnLogout);
+        MaterialButton btnLogoutHeader = v.findViewById(R.id.btnLogoutHeader);
         View rowChangePassword = v.findViewById(R.id.rowChangePassword);
         View rowWallet = v.findViewById(R.id.rowWallet);
         View rowContact = v.findViewById(R.id.rowContact);
@@ -100,9 +117,8 @@ public class ProfileFragment extends Fragment {
                 try {
                     android.widget.Toast.makeText(requireContext(), msg, android.widget.Toast.LENGTH_SHORT).show();
                 } catch (Throwable ignored) {}
-                if (msg.contains("تم تحديث")) {
-                    navigateHome();
-                }
+                // Stay on Profile. Auto-navigating Home after a toast made
+                // HyperOS look like Profile immediately bounced back.
             }
         });
         vm.load();
@@ -116,6 +132,7 @@ public class ProfileFragment extends Fragment {
 
         if (btnRetry != null) btnRetry.setOnClickListener(x -> vm.load());
         if (btnLogout != null) btnLogout.setOnClickListener(x -> confirmLogout(btnLogout));
+        if (btnLogoutHeader != null) btnLogoutHeader.setOnClickListener(x -> confirmLogout(btnLogoutHeader));
         if (rowContact != null) {
             rowContact.setOnClickListener(x -> safeNavigate(R.id.contactUsFragment));
         }
@@ -145,35 +162,13 @@ public class ProfileFragment extends Fragment {
                     R.id.btnLangEnglish,
                     R.id.btnLangTurkish
             );
+            ProfileScreenViews.passVerticalScrollToParent(groupLanguage);
+            ProfileScreenViews.passVerticalScrollToParent(groupTheme);
         } catch (Throwable ignored) {}
-        ThemeStore themeStore = new ThemeStore(requireContext());
-        String savedTheme = themeStore.getSavedTheme();
-        if (ThemeStore.THEME_PINK.equalsIgnoreCase(savedTheme) && btnThemeWardi != null) {
-            if (groupTheme != null) groupTheme.check(btnThemeWardi.getId());
-        } else if (ThemeStore.THEME_GRAY.equalsIgnoreCase(savedTheme) && btnThemeGraphite != null) {
-            if (groupTheme != null) groupTheme.check(btnThemeGraphite.getId());
-        } else if (btnThemeSanad != null) {
-            if (groupTheme != null) groupTheme.check(btnThemeSanad.getId());
-        }
-
-        if (btnThemeSanad != null) {
-            btnThemeSanad.setOnClickListener(v1 -> {
-                if (groupTheme != null) groupTheme.check(btnThemeSanad.getId());
-                applyTheme(themeStore, ThemeStore.THEME_BLUE);
-            });
-        }
-        if (btnThemeWardi != null) {
-            btnThemeWardi.setOnClickListener(v1 -> {
-                if (groupTheme != null) groupTheme.check(btnThemeWardi.getId());
-                applyTheme(themeStore, ThemeStore.THEME_PINK);
-            });
-        }
-        if (btnThemeGraphite != null) {
-            btnThemeGraphite.setOnClickListener(v1 -> {
-                if (groupTheme != null) groupTheme.check(btnThemeGraphite.getId());
-                applyTheme(themeStore, ThemeStore.THEME_GRAY);
-            });
-        }
+        try {
+            ProfileScreenViews.bindThemeGroup(
+                    this, groupTheme, btnThemeSanad, btnThemeWardi, btnThemeGraphite);
+        } catch (Throwable ignored) {}
 
         // Tips are scheduled from render() once profile content is visible.
     }
@@ -237,17 +232,6 @@ public class ProfileFragment extends Fragment {
         } catch (Throwable ignored) {}
     }
 
-    private void applyTheme(ThemeStore themeStore, String theme) {
-        try {
-            CoachMarkManager.dismissActive();
-            themeStore.saveTheme(theme);
-            if (!isAdded()) return;
-            android.app.Activity activity = getActivity();
-            if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
-            activity.recreate();
-        } catch (Throwable ignored) {}
-    }
-
     private void render(ProfileViewModel.UIState state){
         if (state == null || !isAdded()) return;
         try {
@@ -262,9 +246,7 @@ public class ProfileFragment extends Fragment {
                 if (tvHeaderName != null) tvHeaderName.setText(name);
                 if (tvHeaderRole != null) tvHeaderRole.setText(role);
                 if (tvInitial != null) {
-                    String trimmed = name.trim();
-                    String initial = trimmed.isEmpty() ? "-" : trimmed.substring(0, 1).toUpperCase();
-                    tvInitial.setText(initial);
+                    tvInitial.setText(ProfileScreenViews.initialOf(name));
                 }
                 currentRole = state.data.role;
                 boolean isPatient = isPatientRole(currentRole);
@@ -464,23 +446,5 @@ public class ProfileFragment extends Fragment {
     private void showChangePasswordDialog() {
         ChangePasswordDialogHelper.show(requireContext(),
                 (current, pass, confirm) -> vm.changePassword(current, pass, confirm));
-    }
-
-    private void navigateHome(){
-        try {
-            CoachMarkManager.dismissActive();
-            String role = currentRole != null ? currentRole.toLowerCase() : "";
-            int dest = R.id.patientDashboardFragment;
-            if (role.contains("specialist")) {
-                dest = R.id.specialistDashboardFragment;
-            } else if (role.contains("organization")) {
-                dest = R.id.orgDashboardFragment;
-            } else if (role.contains("admin")) {
-                dest = R.id.adminDashboardFragment;
-            }
-            if (isAdded()) {
-                NavHostFragment.findNavController(this).navigate(dest);
-            }
-        } catch (Throwable ignored) {}
     }
 }

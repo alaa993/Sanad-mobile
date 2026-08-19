@@ -9,7 +9,10 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="always"
+        android:paddingBottom="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,6 +90,21 @@
                                 android:textSize="13sp"
                                 android:visibility="gone" />
                         </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLogoutHeader"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minHeight="0dp"
+                            android:minWidth="0dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:text="@string/logout"
+                            android:textAllCaps="false"
+                            android:textColor="@color/sanad_on_primary"
+                            android:textStyle="bold"
+                            app:rippleColor="#33FFFFFF" />
                     </LinearLayout>
 
                     <TextView
@@ -138,7 +156,7 @@
                         android:id="@+id/rowName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@android:color/transparent"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
@@ -344,6 +362,20 @@
                     android:textColor="@color/sanad_primary" />
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/logout"
+                android:textAllCaps="false"
+                android:textColor="@color/sanad_on_bg"
+                app:backgroundTint="@color/profile_logout_bg"
+                app:cornerRadius="22dp"
+                app:elevation="0dp"
+                app:strokeWidth="0dp" />
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardOrgInfo"
                 android:layout_width="match_parent"
@@ -449,7 +481,7 @@
                             android:textSize="12sp" />
                     </LinearLayout>
 
-                    <com.google.android.material.materialswitch.MaterialSwitch
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/switchPushEnabled"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -471,7 +503,7 @@
                 android:layout_marginTop="8dp"
                 android:descendantFocusability="blocksDescendants"
                 app:singleSelection="true"
-                app:selectionRequired="true">
+                app:selectionRequired="false">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnLangArabic"
@@ -535,8 +567,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:singleSelection="true"
-                app:checkedButton="@id/btnThemeSanad"
-                app:selectionRequired="true">
+                app:selectionRequired="false">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnThemeSanad"
@@ -864,16 +895,6 @@
                         app:tint="@color/sanad_input_hint" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogout"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/logout"
-                android:textAllCaps="false"
-                android:textColor="@color/sanad_surface"
-                android:background="@drawable/bg_profile_logout" />
 
             </LinearLayout>
         </LinearLayout>

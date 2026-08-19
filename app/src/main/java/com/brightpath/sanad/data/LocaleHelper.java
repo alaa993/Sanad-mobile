@@ -2,6 +2,7 @@ package com.brightpath.sanad.data;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,23 @@ public final class LocaleHelper {
 
     public static void applySavedLocale(Context context) {
         new LocaleStore(context).applySavedLocale();
+    }
+
+    /** Per-activity wrap so Xiaomi/HyperOS honor the saved locale. */
+    @NonNull
+    public static Context wrap(@NonNull Context context) {
+        try {
+            String tag = resolveSavedTag(context);
+            if (tag.isEmpty()) return context;
+            Locale locale = new Locale(tag);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration(context.getResources().getConfiguration());
+            config.setLocale(locale);
+            config.setLayoutDirection(locale);
+            return context.createConfigurationContext(config);
+        } catch (Throwable ignored) {
+            return context;
+        }
     }
 
     public static void ensureDefaultLocale(Context context) {
@@ -91,6 +109,9 @@ public final class LocaleHelper {
         applyLocale(activity, tag);
         try {
             com.brightpath.sanad.ui.tour.CoachMarkManager.dismissActive();
+        } catch (Throwable ignored) {}
+        try {
+            com.brightpath.sanad.router.NavRestore.remember(activity);
         } catch (Throwable ignored) {}
         activity.getWindow().getDecorView().post(() -> {
             if (!activity.isFinishing() && !activity.isDestroyed()) {

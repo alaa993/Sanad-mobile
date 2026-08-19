@@ -45,12 +45,25 @@ public final class LanguageUiHelper {
                                   @IdRes int btnTurkish) {
         String active = LocaleHelper.resolveSavedTag(activity);
         group.clearOnButtonCheckedListeners();
-
-        bindButton(group, btnArabic, () -> selectLanguage(activity, group, btnArabic, "ar"));
-        bindButton(group, btnEnglish, () -> selectLanguage(activity, group, btnEnglish, "en"));
-        bindButton(group, btnTurkish, () -> selectLanguage(activity, group, btnTurkish, "tr"));
-
-        group.check(buttonIdForTag(active, btnArabic, btnEnglish, btnTurkish));
+        // Ignore HyperOS clicks synthesized by check() — those recreate MainActivity
+        // and dump Profile back onto the start tab.
+        final boolean[] ready = {false};
+        bindButton(group, btnArabic, () -> {
+            if (!ready[0]) return;
+            selectLanguage(activity, group, btnArabic, "ar");
+        });
+        bindButton(group, btnEnglish, () -> {
+            if (!ready[0]) return;
+            selectLanguage(activity, group, btnEnglish, "en");
+        });
+        bindButton(group, btnTurkish, () -> {
+            if (!ready[0]) return;
+            selectLanguage(activity, group, btnTurkish, "tr");
+        });
+        try {
+            group.check(buttonIdForTag(active, btnArabic, btnEnglish, btnTurkish));
+        } catch (Throwable ignored) {}
+        group.post(() -> ready[0] = true);
     }
 
     private static void bindButton(@NonNull MaterialButtonToggleGroup group,
@@ -72,6 +85,9 @@ public final class LanguageUiHelper {
         try {
             group.check(buttonId);
         } catch (Throwable ignored) {}
+        if (tag.equalsIgnoreCase(LocaleHelper.resolveSavedTag(activity))) {
+            return;
+        }
         LocaleHelper.applyLocaleAndRecreate(activity, tag);
     }
 

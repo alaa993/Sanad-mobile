@@ -110,7 +110,7 @@ public class AuthRepository {
 
             Request.Builder builder = original.newBuilder()
                     .header("Accept", "application/json")
-                    .header("User-Agent", "SanadAndroid/1.0.14")
+                    .header("User-Agent", "SanadAndroid/1.0.18")
                     .header("Connection", "keep-alive");
             if (publicAuth) {
                 builder.removeHeader("Authorization");

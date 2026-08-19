@@ -50,14 +50,14 @@ public class HomeFragment extends Fragment {
     private DashboardResponse.SessionSummary currentNext;
     private String currentRole;
     private String mode = "dashboard";
-    private boolean allowRedirect = true;
+    private boolean allowRedirect = false;
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater i, @Nullable ViewGroup c, @Nullable Bundle s) {
         if (getArguments() != null) {
             String argMode = getArguments().getString("mode", "dashboard");
             mode = argMode != null ? argMode : "dashboard";
-            allowRedirect = getArguments().getBoolean("allowRedirect", true);
+            allowRedirect = getArguments().getBoolean("allowRedirect", false);
         }
         if ("shortcuts".equalsIgnoreCase(mode)) {
             return i.inflate(R.layout.fragment_shortcuts, c, false);

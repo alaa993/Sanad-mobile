@@ -40,7 +40,6 @@ public final class RoleRouter {
         try {
             NavOptions options = new NavOptions.Builder()
                     .setLaunchSingleTop(true)
-                    .setPopUpTo(nav.getGraph().getStartDestinationId(), true)
                     .build();
             nav.navigate(destination, null, options);
             return true;

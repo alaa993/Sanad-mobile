@@ -17,8 +17,8 @@ android {
         applicationId "com.brightpath.sanad"
         minSdkVersion 24
         targetSdkVersion 36
-        versionCode 14
-        versionName "1.0.14"
+        versionCode 20
+        versionName "1.0.20"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         ndk {

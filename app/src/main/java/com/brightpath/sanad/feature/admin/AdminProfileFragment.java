@@ -44,7 +44,17 @@ public class AdminProfileFragment extends Fragment {
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_profile, container, false);
+        try {
+            return com.brightpath.sanad.feature.profile.ProfileScreenViews.inflate(
+                    inflater, container, R.layout.fragment_admin_profile, this);
+        } catch (Throwable ignored) {
+            android.widget.FrameLayout root = new android.widget.FrameLayout(inflater.getContext());
+            android.widget.TextView label = new android.widget.TextView(inflater.getContext());
+            label.setText(R.string.admin_profile_title);
+            label.setPadding(48, 48, 48, 48);
+            root.addView(label);
+            return root;
+        }
     }
 
     @Override
@@ -63,6 +73,14 @@ public class AdminProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle s) {
         super.onViewCreated(v, s);
+        try {
+            bindAdminProfileUi(v);
+        } catch (Throwable ignored) {
+            // Never let admin profile setup take down MainActivity.
+        }
+    }
+
+    private void bindAdminProfileUi(@NonNull View v) {
         imgAvatar = v.findViewById(R.id.imgAdminAvatar);
         etName = v.findViewById(R.id.etAdminName);
         etLocale = v.findViewById(R.id.etAdminLocale);
@@ -87,48 +105,56 @@ public class AdminProfileFragment extends Fragment {
         vm = new ViewModelProvider(this).get(AdminViewModels.ProfileVM.class);
         vm.state.observe(getViewLifecycleOwner(), profile -> {
             if (profile == null) return;
-            progress.setVisibility(View.GONE);
-            etName.setText(profile.name != null ? profile.name : "");
-            etLocale.setText(profile.locale != null ? profile.locale : "");
-            etPhone.setText(profile.phone != null ? profile.phone : "");
-            tvEmail.setText(profile.email != null ? profile.email : "-");
-            if (!TextUtils.isEmpty(profile.privacy_policy)) etPrivacy.setText(profile.privacy_policy);
-            if (!TextUtils.isEmpty(profile.contact_info)) etContact.setText(profile.contact_info);
+            if (progress != null) progress.setVisibility(View.GONE);
+            if (etName != null) etName.setText(profile.name != null ? profile.name : "");
+            if (etLocale != null) etLocale.setText(profile.locale != null ? profile.locale : "");
+            if (etPhone != null) etPhone.setText(profile.phone != null ? profile.phone : "");
+            if (tvEmail != null) tvEmail.setText(profile.email != null ? profile.email : "-");
+            if (!TextUtils.isEmpty(profile.privacy_policy) && etPrivacy != null) etPrivacy.setText(profile.privacy_policy);
+            if (!TextUtils.isEmpty(profile.contact_info) && etContact != null) etContact.setText(profile.contact_info);
             if (profile.platform_fee_percent != null && etPlatformFee != null) {
                 etPlatformFee.setText(String.valueOf(profile.platform_fee_percent));
             }
-            if (profile.stats != null) {
+            if (profile.stats != null && tvStats != null) {
                 tvStats.setText(getString(R.string.admin_profile_stats_fmt,
                         profile.stats.pending_specialists,
                         profile.stats.pending_organizations,
                         profile.stats.total_users,
                         profile.stats.total_sessions));
             }
-            Glide.with(this)
-                    .load(profile.avatar)
-                    .placeholder(R.drawable.ic_profile)
-                    .circleCrop()
-                    .into(imgAvatar);
+            if (imgAvatar != null) {
+                Glide.with(this)
+                        .load(profile.avatar)
+                        .placeholder(R.drawable.ic_profile)
+                        .circleCrop()
+                        .into(imgAvatar);
+            }
         });
         vm.toast.observe(getViewLifecycleOwner(), msg -> {
             if (!TextUtils.isEmpty(msg)) Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
         });
 
-        btnPickAvatar.setOnClickListener(x -> { pendingAvatar = null; avatarPicker.launch("image/*"); });
-        btnSave.setOnClickListener(x -> saveProfile());
+        if (btnPickAvatar != null) {
+            btnPickAvatar.setOnClickListener(x -> { pendingAvatar = null; avatarPicker.launch("image/*"); });
+        }
+        if (btnSave != null) btnSave.setOnClickListener(x -> saveProfile());
         if (btnChangePassword != null) {
             btnChangePassword.setOnClickListener(x -> showChangePasswordDialog());
         }
-        btnSaveSettings.setOnClickListener(x -> saveSettings());
-        btnWallet.setOnClickListener(x -> NavHostFragment.findNavController(this).navigate(R.id.adminWalletFragment));
-        btnLogout.setOnClickListener(x -> confirmLogout(btnLogout));
+        if (btnSaveSettings != null) btnSaveSettings.setOnClickListener(x -> saveSettings());
+        if (btnWallet != null) {
+            btnWallet.setOnClickListener(x -> NavHostFragment.findNavController(this).navigate(R.id.adminWalletFragment));
+        }
+        if (btnLogout != null) btnLogout.setOnClickListener(x -> confirmLogout(btnLogout));
         wireQuickLink(v, R.id.btnQuickSpecialists, R.id.adminSpecialistsFragment);
         wireQuickLink(v, R.id.btnQuickOrgs, R.id.adminOrganizationsFragment);
         wireQuickLink(v, R.id.btnQuickSessions, R.id.adminSessionsFragment);
         wireQuickLink(v, R.id.btnQuickUsers, R.id.adminUsersFragment);
-        PushPreferencesBinder.bind(this, v);
+        try {
+            PushPreferencesBinder.bind(this, v);
+        } catch (Throwable ignored) {}
 
-        progress.setVisibility(View.VISIBLE);
+        if (progress != null) progress.setVisibility(View.VISIBLE);
         vm.load();
     }
 

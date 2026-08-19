@@ -12,6 +12,11 @@ public class AppConfig extends Application {
     private static Context context;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.wrap(base));
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();

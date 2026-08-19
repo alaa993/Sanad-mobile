@@ -23,7 +23,6 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.brightpath.sanad.R;
 import com.brightpath.sanad.data.AppConfig;
 import com.brightpath.sanad.data.LanguageUiHelper;
-import com.brightpath.sanad.data.ThemeStore;
 import com.brightpath.sanad.data.auth.AuthRepository;
 import com.brightpath.sanad.ui.ChangePasswordDialogHelper;
 import com.brightpath.sanad.push.PushPreferencesBinder;
@@ -43,9 +42,26 @@ public class SpecialistProfileFragment extends Fragment {
   private View content;
   private View progress;
 
-  @Nullable @Override public View onCreateView(@NonNull LayoutInflater i,@Nullable ViewGroup c,@Nullable Bundle s){ return i.inflate(R.layout.fragment_specialist_profile, c, false); }
+  @Nullable @Override public View onCreateView(@NonNull LayoutInflater i,@Nullable ViewGroup c,@Nullable Bundle s){
+    try {
+      return com.brightpath.sanad.feature.profile.ProfileScreenViews.inflate(i, c, R.layout.fragment_specialist_profile, this);
+    } catch (Throwable ignored) {
+      android.widget.FrameLayout root = new android.widget.FrameLayout(i.getContext());
+      android.widget.TextView label = new android.widget.TextView(i.getContext());
+      label.setText(R.string.nav_profile);
+      label.setPadding(48, 48, 48, 48);
+      root.addView(label);
+      return root;
+    }
+  }
   @Override public void onViewCreated(@NonNull View v,@Nullable Bundle s){
     super.onViewCreated(v,s);
+    try {
+      bindSpecialistProfileUi(v);
+    } catch (Throwable ignored) {}
+  }
+
+  private void bindSpecialistProfileUi(@NonNull View v) {
     content = v.findViewById(R.id.content);
     progress = v.findViewById(R.id.progress);
     if (progress != null) progress.setVisibility(View.VISIBLE);
@@ -145,8 +161,7 @@ public class SpecialistProfileFragment extends Fragment {
       }
       if (tvHeaderStatus != null) tvHeaderStatus.setText(statusLabel(p.status));
       if (tvInitial != null) {
-        String initial = name.trim().isEmpty() ? "-" : name.trim().substring(0, 1).toUpperCase(Locale.ROOT);
-        tvInitial.setText(initial);
+        tvInitial.setText(com.brightpath.sanad.feature.profile.ProfileScreenViews.initialOf(name));
       }
       bindAvatar(p.avatar);
     } });
@@ -155,7 +170,9 @@ public class SpecialistProfileFragment extends Fragment {
     });
 
     if (btnLogout != null) btnLogout.setOnClickListener(x -> confirmLogout(btnLogout));
-    PushPreferencesBinder.bind(this, v);
+    try {
+      PushPreferencesBinder.bind(this, v);
+    } catch (Throwable ignored) {}
     if (rowSpecialistInfo != null) rowSpecialistInfo.setOnClickListener(x -> safeNavigate(R.id.specialistInfoFragment));
     if (rowWallet != null) rowWallet.setOnClickListener(x -> safeNavigate(R.id.walletFragment));
     if (rowEditInfo != null) rowEditInfo.setOnClickListener(x -> safeNavigate(R.id.specialistEditFragment));
@@ -163,41 +180,19 @@ public class SpecialistProfileFragment extends Fragment {
     if (rowContact != null) rowContact.setOnClickListener(x -> safeNavigate(R.id.contactUsFragment));
     if (rowPrivacy != null) rowPrivacy.setOnClickListener(x -> safeNavigate(R.id.privacyPolicyFragment));
 
-    LanguageUiHelper.bindToggleGroup(
-            this,
-            groupLanguage,
-            R.id.btnLangArabic,
-            R.id.btnLangEnglish,
-            R.id.btnLangTurkish
-    );
-    ThemeStore themeStore = new ThemeStore(requireContext());
-    String savedTheme = themeStore.getSavedTheme();
-    if (ThemeStore.THEME_PINK.equalsIgnoreCase(savedTheme) && btnThemeWardi != null) {
-      if (groupTheme != null) groupTheme.check(btnThemeWardi.getId());
-    } else if (ThemeStore.THEME_GRAY.equalsIgnoreCase(savedTheme) && btnThemeGraphite != null) {
-      if (groupTheme != null) groupTheme.check(btnThemeGraphite.getId());
-    } else if (btnThemeSanad != null) {
-      if (groupTheme != null) groupTheme.check(btnThemeSanad.getId());
-    }
-
-    if (btnThemeSanad != null) {
-      btnThemeSanad.setOnClickListener(v1 -> {
-        if (groupTheme != null) groupTheme.check(btnThemeSanad.getId());
-        applyTheme(themeStore, ThemeStore.THEME_BLUE);
-      });
-    }
-    if (btnThemeWardi != null) {
-      btnThemeWardi.setOnClickListener(v1 -> {
-        if (groupTheme != null) groupTheme.check(btnThemeWardi.getId());
-        applyTheme(themeStore, ThemeStore.THEME_PINK);
-      });
-    }
-    if (btnThemeGraphite != null) {
-      btnThemeGraphite.setOnClickListener(v1 -> {
-        if (groupTheme != null) groupTheme.check(btnThemeGraphite.getId());
-        applyTheme(themeStore, ThemeStore.THEME_GRAY);
-      });
-    }
+    try {
+      LanguageUiHelper.bindToggleGroup(
+              this,
+              groupLanguage,
+              R.id.btnLangArabic,
+              R.id.btnLangEnglish,
+              R.id.btnLangTurkish
+      );
+    } catch (Throwable ignored) {}
+    try {
+      com.brightpath.sanad.feature.profile.ProfileScreenViews.bindThemeGroup(
+              this, groupTheme, btnThemeSanad, btnThemeWardi, btnThemeGraphite);
+    } catch (Throwable ignored) {}
 
     vm.load();
     paintUserMetaFromCache();
@@ -214,8 +209,7 @@ public class SpecialistProfileFragment extends Fragment {
     if (tvEmail != null) tvEmail.setText(email != null && !email.isEmpty() ? email : "-");
     if (tvHeaderName != null) tvHeaderName.setText(name);
     if (tvInitial != null) {
-      String initial = name.trim().isEmpty() ? "-" : name.trim().substring(0, 1).toUpperCase(Locale.ROOT);
-      tvInitial.setText(initial);
+      tvInitial.setText(com.brightpath.sanad.feature.profile.ProfileScreenViews.initialOf(name));
     }
     if (tvHeaderRole != null && role != null) tvHeaderRole.setText(role);
     if (tvRole != null && role != null && TextUtils.isEmpty(tvRole.getText())) tvRole.setText(role);
@@ -230,17 +224,6 @@ public class SpecialistProfileFragment extends Fragment {
       if (!isAdded()) return;
       com.brightpath.sanad.ui.tour.CoachMarkManager.dismissActive();
       NavHostFragment.findNavController(this).navigate(destId);
-    } catch (Throwable ignored) {}
-  }
-
-  private void applyTheme(ThemeStore themeStore, String theme) {
-    try {
-      com.brightpath.sanad.ui.tour.CoachMarkManager.dismissActive();
-      themeStore.saveTheme(theme);
-      if (!isAdded()) return;
-      android.app.Activity activity = getActivity();
-      if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
-      activity.recreate();
     } catch (Throwable ignored) {}
   }
 

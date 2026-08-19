@@ -3,6 +3,7 @@ package com.brightpath.sanad.data;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Looper;
 import android.os.Process;
 import android.util.Log;
 
@@ -11,9 +12,8 @@ import com.brightpath.sanad.ui.LoginActivity;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 /**
- * Last-resort handler: record the crash and open Login.
- * On Xiaomi/HyperOS, avoid killProcess when possible — it surfaces as
- * "Sanad keeps stopping" even after recovery.
+ * Last-resort handler. Worker-thread crashes must not restart MainActivity
+ * (that looks like Profile silently jumping to Home on Xiaomi/HyperOS).
  */
 public final class CrashSafety {
     private static final String TAG = "CrashSafety";
@@ -25,6 +25,23 @@ public final class CrashSafety {
         final Context app = appContext.getApplicationContext();
         final Thread.UncaughtExceptionHandler previous = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+            try {
+                Log.e(TAG, "Uncaught exception", throwable);
+            } catch (Throwable ignored) {}
+            try {
+                FirebaseCrashlytics.getInstance().recordException(throwable);
+            } catch (Throwable ignored) {}
+
+            boolean mainThread = false;
+            try {
+                mainThread = Looper.getMainLooper().getThread() == thread;
+            } catch (Throwable ignored) {}
+            if (!mainThread) {
+                // Keep the current screen (Profile) alive. OkHttp /me parse
+                // used to kill the process and RoleBoot reopened Home.
+                return;
+            }
+
             if (handling) {
                 Process.killProcess(Process.myPid());
                 System.exit(10);
@@ -32,21 +49,13 @@ public final class CrashSafety {
             }
             handling = true;
             try {
-                Log.e(TAG, "Uncaught exception", throwable);
-            } catch (Throwable ignored) {}
-            try {
-                FirebaseCrashlytics.getInstance().recordException(throwable);
-            } catch (Throwable ignored) {}
-            try {
                 TokenStore.setSessionListener(null);
-                // Do NOT clear a valid session on every crash — only navigate to recovery.
             } catch (Throwable ignored) {}
             try {
                 boolean hasSession = false;
                 try {
                     hasSession = new TokenStore(app).hasToken();
                 } catch (Throwable ignored) {}
-                // Xiaomi/HyperOS profile crashes must not dump a still-logged-in user on Login.
                 Intent intent = new Intent(app, hasSession
                         ? com.brightpath.sanad.ui.MainActivity.class
                         : LoginActivity.class);
@@ -65,8 +74,6 @@ public final class CrashSafety {
                     return;
                 }
             } catch (Throwable ignored) {}
-            // Xiaomi shows "keeps stopping" on killProcess; still need to stop a broken process.
-            // Prefer a short delay so Login can appear first.
             try {
                 String mfr = Build.MANUFACTURER != null ? Build.MANUFACTURER.toLowerCase() : "";
                 if (mfr.contains("xiaomi") || mfr.contains("redmi") || mfr.contains("poco")) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:color="?attr/sanadPrimary" />
+    <!-- Concrete colors only. Theme attributes in ColorStateLists crash inflate on HyperOS. -->
+    <item android:state_checked="true" android:color="@color/sanad_blue_primary" />
     <item android:color="@color/profile_segment_unchecked_bg" />
 </selector>

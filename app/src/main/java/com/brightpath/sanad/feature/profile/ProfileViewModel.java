@@ -16,18 +16,37 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ProfileViewModel extends AndroidViewModel {
-    private final AuthRepository repo;
-    private final TokenStore tokens;
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final MutableLiveData<UIState> state = new MutableLiveData<>();
     private final MutableLiveData<String> toast = new MutableLiveData<>();
+    private final AuthRepository repo;
+    private final TokenStore tokens;
+    private final ExecutorService executor;
 
     public ProfileViewModel(@NonNull Application app){
         super(app);
         repo = new AuthRepository(app, AppConfig.BASE_URL);
         tokens = new TokenStore(app);
+        executor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "profile-vm");
+            t.setUncaughtExceptionHandler((thread, ex) -> {
+                try {
+                    com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(ex);
+                } catch (Throwable ignored) {}
+                User fallback = cachedUser();
+                if (fallback != null) {
+                    state.postValue(UIState.data(fallback));
+                } else {
+                    state.postValue(UIState.error("profile"));
+                }
+            });
+            return t;
+        });
         User cached = cachedUser();
-        state.setValue(cached != null ? UIState.data(cached) : UIState.loading());
+        try {
+            state.setValue(cached != null ? UIState.data(cached) : UIState.loading());
+        } catch (Throwable ignored) {
+            state.postValue(cached != null ? UIState.data(cached) : UIState.loading());
+        }
     }
 
     public LiveData<UIState> getState(){ return state; }
@@ -60,21 +79,12 @@ public class ProfileViewModel extends AndroidViewModel {
                     if (user.id > 0) tokens.saveUserId(user.id);
                 }
                 state.postValue(UIState.data(user));
-            } catch (com.brightpath.sanad.data.auth.AuthException authEx) {
-                // Keep cached profile on screen. Only /api/auth/me 401 (AuthInterceptor)
-                // may clear the session — never 403/404/parse errors on Xiaomi/HyperOS.
+            } catch (Throwable t) {
                 User fallback = current != null && current.data != null ? current.data : cachedUser();
                 if (fallback != null) {
                     state.postValue(UIState.data(fallback));
                 } else {
-                    state.postValue(UIState.error(authEx.getMessage()));
-                }
-            } catch (Exception e){
-                User fallback = current != null && current.data != null ? current.data : cachedUser();
-                if (fallback != null) {
-                    state.postValue(UIState.data(fallback));
-                } else {
-                    state.postValue(UIState.error(e.getMessage()));
+                    state.postValue(UIState.error(t.getMessage()));
                 }
             }
         });
@@ -85,7 +95,7 @@ public class ProfileViewModel extends AndroidViewModel {
             try {
                 repo.updatePassword(current, password, confirm);
                 toast.postValue("تم تحديث كلمة المرور");
-            } catch (Exception e){
+            } catch (Throwable e){
                 toast.postValue("تعذر تحديث كلمة المرور");
             }
         });
@@ -100,7 +110,7 @@ public class ProfileViewModel extends AndroidViewModel {
                 }
                 toast.postValue("تم حفظ التغييرات");
                 load(true);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 toast.postValue("تعذر حفظ التغييرات");
             }
         });
@@ -125,7 +135,7 @@ public class ProfileViewModel extends AndroidViewModel {
                 } else {
                     toast.postValue(getApplication().getString(com.brightpath.sanad.R.string.profile_resubmit_failed));
                 }
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 toast.postValue(getApplication().getString(com.brightpath.sanad.R.string.profile_resubmit_failed));
             }
         });

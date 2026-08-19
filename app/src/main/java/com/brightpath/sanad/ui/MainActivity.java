@@ -1,5 +1,6 @@
 package com.brightpath.sanad.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -9,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationBarMenuView;
@@ -18,6 +19,7 @@ import com.google.android.material.navigation.NavigationBarItemView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.brightpath.sanad.R;
 import com.brightpath.sanad.data.ThemeStore;
+import com.brightpath.sanad.data.LocaleHelper;
 import com.brightpath.sanad.data.AppConfig;
 import com.brightpath.sanad.data.auth.AuthRepository;
 import com.brightpath.sanad.data.auth.SessionGuard;
@@ -30,6 +32,12 @@ import com.brightpath.sanad.feature.sessions.BookSessionFragment;
 
 public class MainActivity extends AppCompatActivity {
   private NavController navController;
+  private boolean syncingBottomNav;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.wrap(newBase));
+    }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,11 +194,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         try {
-            // Do not use setupWithNavController alone — it fights RoleBoot's start destination.
-            // Custom listener below owns tab switches.
-            NavigationUI.setupWithNavController(bottomNav, navController);
+            // Do not use setupWithNavController: it popUpTo roleBoot and RoleBoot
+            // then opens Home, so Profile never stays selected.
+            // Do not use setSelectedItemId: HyperOS fires another tab click.
+            navController.addOnDestinationChangedListener((controller, destination, args) -> {
+                if (destination == null) return;
+                int destId = destination.getId();
+                try {
+                    if (destId != R.id.roleBootFragment) {
+                        com.brightpath.sanad.router.NavRestore.rememberDest(MainActivity.this, destId);
+                    }
+                } catch (Throwable ignored) {}
+                android.view.MenuItem tab = bottomNav.getMenu().findItem(destId);
+                if (tab == null || tab.isChecked()) return;
+                syncingBottomNav = true;
+                try {
+                    tab.setChecked(true);
+                } catch (Throwable ignored) {
+                } finally {
+                    syncingBottomNav = false;
+                }
+            });
         } catch (Throwable ignored) {}
         bottomNav.setOnItemSelectedListener(item -> {
+            if (syncingBottomNav) return true;
             // Keep the center Sanad logo un-tinted even when selected.
             if (bottomNav.getMenu().findItem(R.id.patientShortcutsFragment) != null) {
                 bottomNav.getMenu().findItem(R.id.patientShortcutsFragment).setIconTintList(null);
@@ -204,29 +231,10 @@ public class MainActivity extends AppCompatActivity {
             if (bottomNav.getMenu().findItem(R.id.orgShortcutsFragment) != null) {
                 bottomNav.getMenu().findItem(R.id.orgShortcutsFragment).setIconTintList(null);
             }
-            int destId = item.getItemId();
-            try {
-                if (navController.getCurrentDestination() != null
-                        && navController.getCurrentDestination().getId() == destId) {
-                    return true;
-                }
-                // Prefer navigate; pop only when that destination is already under us.
-                if (isOnBackStack(navController, destId)
-                        && navController.popBackStack(destId, false)) {
-                    return true;
-                }
-                return NavigationUI.onNavDestinationSelected(item, navController);
-            } catch (Throwable t) {
-                return false;
-            }
+            return navigateTab(item.getItemId());
         });
         bottomNav.setOnItemReselectedListener(item -> {
-            try {
-                int destId = item.getItemId();
-                if (isOnBackStack(navController, destId)) {
-                    navController.popBackStack(destId, false);
-                }
-            } catch (Throwable ignored) {}
+            // Stay on the selected tab. Do not pop — that sent Profile back to Home.
         });
 
         getWindow().getDecorView().post(() -> {
@@ -307,15 +315,43 @@ public class MainActivity extends AppCompatActivity {
         } catch (Throwable ignored) {}
     }
 
-    private static boolean isOnBackStack(NavController nav, int destId) {
+    private boolean navigateTab(int destId) {
+        if (navController == null) return false;
         try {
-            nav.getBackStackEntry(destId);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        } catch (Throwable t) {
+            if (navController.getCurrentDestination() != null
+                    && navController.getCurrentDestination().getId() == destId) {
+                return true;
+            }
+            NavOptions options = new NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .setRestoreState(false)
+                    .build();
+            try {
+                navController.navigate(destId, null, options);
+                return true;
+            } catch (IllegalArgumentException first) {
+                int action = globalActionForTab(destId);
+                if (action != 0) {
+                    navController.navigate(action, null, options);
+                    return true;
+                }
+                navController.navigate(destId);
+                return true;
+            }
+        } catch (Throwable ignored) {
             return false;
         }
+    }
+
+    private static int globalActionForTab(int destId) {
+        if (destId == R.id.profileFragment) return R.id.action_global_profile;
+        if (destId == R.id.specialistProfileFragment) return R.id.action_global_specialist_profile;
+        if (destId == R.id.adminProfileFragment) return R.id.action_global_admin_profile;
+        if (destId == R.id.patientDashboardFragment) return R.id.action_global_patient_home;
+        if (destId == R.id.specialistDashboardFragment) return R.id.action_global_specialist_home;
+        if (destId == R.id.orgDashboardFragment) return R.id.action_global_org_home;
+        if (destId == R.id.adminDashboardFragment) return R.id.action_global_admin_home;
+        return 0;
     }
 
     @Override

@@ -809,5 +809,33 @@
     <action
         android:id="@+id/action_global_patient_tasks"
         app:destination="@id/patientTasksFragment" />
+    <action
+        android:id="@+id/action_global_profile"
+        app:destination="@id/profileFragment"
+        app:launchSingleTop="true" />
+    <action
+        android:id="@+id/action_global_specialist_profile"
+        app:destination="@id/specialistProfileFragment"
+        app:launchSingleTop="true" />
+    <action
+        android:id="@+id/action_global_admin_profile"
+        app:destination="@id/adminProfileFragment"
+        app:launchSingleTop="true" />
+    <action
+        android:id="@+id/action_global_patient_home"
+        app:destination="@id/patientDashboardFragment"
+        app:launchSingleTop="true" />
+    <action
+        android:id="@+id/action_global_specialist_home"
+        app:destination="@id/specialistDashboardFragment"
+        app:launchSingleTop="true" />
+    <action
+        android:id="@+id/action_global_org_home"
+        app:destination="@id/orgDashboardFragment"
+        app:launchSingleTop="true" />
+    <action
+        android:id="@+id/action_global_admin_home"
+        app:destination="@id/adminDashboardFragment"
+        app:launchSingleTop="true" />
 
 </navigation>
